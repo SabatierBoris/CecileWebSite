@@ -1,4 +1,27 @@
-Pyramid-base
-============
+#Pyramid-base
 
-This is a base for pyramid project
+This is a base for a pyramid project in python3
+
+It should work with any environnement, but it was only test with :
+ * openshift online
+
+##Openshift Online Integration
+
+###Creation of the openshift application
+	
+	rhc app create APPNAME python-3.3
+	cd YOUR_WORKSPACE
+	rhc git-clone APPNAME
+	cd APPNAME
+
+###Add the base of pyramid
+
+	git remote add upstream -m master https://github.com/SabatierBoris/Pyramid-base.git
+	git pull -s recursive -X theirs upstream master
+	git push
+
+###Enjoy !!!
+
+#Help
+While wsgi.py it run, it's should work with it. But I don't have time for testing all environement.
+So do not esitate to add your integration's procedure.
