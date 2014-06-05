@@ -23,5 +23,5 @@ It should work with any environnement, but it was only test with :
 ###Enjoy !!!
 
 #Help
-While wsgi.py it run, it's should work with it. But I don't have time for testing all environement.
-So do not esitate to add your integration's procedure.
+Until wsgi.py it run, it's should work with it. But I don't have time for testing every environements.
+So do not hesitate to add your integration's procedure.
