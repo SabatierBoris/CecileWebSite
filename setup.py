@@ -1,13 +1,15 @@
+"""
+Setup file to install this app
+"""
 import os
-import sys
 
 from setuptools import setup, find_packages
 
-here = os.path.abspath(os.path.dirname(__file__))
-README = open(os.path.join(here, 'README.md')).read()
-CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
+HERE = os.path.abspath(os.path.dirname(__file__))
+README = open(os.path.join(HERE, 'README.md')).read()
+CHANGES = open(os.path.join(HERE, 'CHANGES.txt')).read()
 
-requires = [
+REQUIRES = [
     'pyramid',
 ]
 
@@ -15,7 +17,7 @@ setup(
     name='pyramidApp',
     version='0.0',
     description='pyramidApp',
-    long_description=README + '\n\n' +  CHANGES,
+    long_description=README + '\n\n' + CHANGES,
     classifiers=[
         "Programming Language :: Python",
         "Framework :: Pylons",
@@ -29,10 +31,10 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     zip_safe=False,
-    install_requires = requires,
-    tests_require = requires,
+    install_requires=REQUIRES,
+    tests_require=REQUIRES,
     test_suite="pyramidApp.tests",
-    entry_points = """\
+    entry_points="""\
         [paste.app_factory]
         main = pyramidApp:main
     """,
