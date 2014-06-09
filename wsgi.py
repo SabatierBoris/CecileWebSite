@@ -10,7 +10,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, 'pyramidapp'))
-CONFIG = os.path.join(HERE, 'pyramidApp', 'config', 'production.ini')
+CONFIG = os.path.join(HERE, 'pyramidapp', 'config', 'production.ini')
 
 logging.config.fileConfig(CONFIG)
 

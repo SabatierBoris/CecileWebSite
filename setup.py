@@ -14,9 +14,9 @@ REQUIRES = [
 ]
 
 setup(
-    name='pyramidApp',
+    name='pyramidapp',
     version='0.0',
-    description='pyramidApp',
+    description='pyramidapp',
     long_description=README + '\n\n' + CHANGES,
     classifiers=[
         "Programming Language :: Python",
@@ -33,9 +33,9 @@ setup(
     zip_safe=False,
     install_requires=REQUIRES,
     tests_require=REQUIRES,
-    test_suite="pyramidApp.tests",
+    test_suite="pyramidapp.tests",
     entry_points="""\
         [paste.app_factory]
-        main = pyramidApp:main
+        main = pyramidapp:main
     """,
 )
