@@ -5,7 +5,7 @@ import unittest
 
 
 class TestExample(unittest.TestCase):
-    # pylint: disable-msg=R0904
+    # pylint: disable=R0904
     #    Too many pyblic methods: we are a subclass of unittest.TestCase
     """
     Test of test
