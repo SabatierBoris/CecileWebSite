@@ -1,0 +1,24 @@
+language: python
+python:
+- '2.7'
+- '3.2'
+- '3.3'
+- pypy
+install:
+- pip install .
+- pip install pep8 pylint nose --upgrade
+script:
+- pep8 pyramidapp setup.py wsgi.py
+- pylint pyramidapp setup.py wsgi.py
+- nosetests
+- gem install httpclient:2.3.4.1
+deploy:
+  provider: openshift
+  user: sabatier.boris@gmail.com
+  password:
+    secure: wjGiS1MxYtiMd83eU3EvLYH/tuSzLl0/6kIGK19M/r+EH3Bzb0FmpSZB69y7oMGMm1XwIrz7Gx4IPMOmnbiC4inrH54ChJLGO71ipfZoqpEPZAYLDrzIaYPAkgXls4rNJaq42UPDu7bfS74LqNPJOT6Ztj1u88gMZoy8xfWzqVE=
+  app: cecile
+  domain: mussier
+  on:
+    repo: SabatierBoris/CecileWebSite
+    python: 3.3
