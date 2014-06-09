@@ -1,10 +1,41 @@
-from setuptools import setup
+"""
+Setup file to install this app
+"""
+import os
 
-setup(name='YourAppName',
-      version='1.0',
-      description='OpenShift App',
-      author='Your Name',
-      author_email='example@example.com',
-      url='http://www.python.org/sigs/distutils-sig/',
-#      install_requires=['Django>=1.3'],
-     )
+from setuptools import setup, find_packages
+
+HERE = os.path.abspath(os.path.dirname(__file__))
+README = open(os.path.join(HERE, 'README.md')).read()
+CHANGES = open(os.path.join(HERE, 'CHANGES.txt')).read()
+
+REQUIRES = [
+    'pyramid',
+]
+
+setup(
+    name='pyramidapp',
+    version='0.0',
+    description='pyramidapp',
+    long_description=README + '\n\n' + CHANGES,
+    classifiers=[
+        "Programming Language :: Python",
+        "Framework :: Pylons",
+        "Topic :: Internet :: WWW/HTTP",
+        "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+    ],
+    author='',
+    author_email='',
+    url='',
+    keywords='web pylons pyramid',
+    packages=find_packages(),
+    include_package_data=True,
+    zip_safe=False,
+    install_requires=REQUIRES,
+    tests_require=REQUIRES,
+    test_suite="pyramidapp.tests",
+    entry_points="""\
+        [paste.app_factory]
+        main = pyramidapp:main
+    """,
+)
