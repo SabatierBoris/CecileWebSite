@@ -10,7 +10,10 @@ README = open(os.path.join(HERE, 'README.md')).read()
 CHANGES = open(os.path.join(HERE, 'CHANGES.txt')).read()
 
 REQUIRES = [
+    # Base
     'pyramid',
+    # BDD
+    'sqlalchemy',
 ]
 
 setup(
@@ -37,5 +40,7 @@ setup(
     entry_points="""\
         [paste.app_factory]
         main = pyramidapp:main
+        [console_scripts]
+        initialize_bd = pyramidapp.scripts.initializebd:main
     """,
 )
