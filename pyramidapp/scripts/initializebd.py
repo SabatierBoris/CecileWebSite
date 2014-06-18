@@ -3,7 +3,6 @@
 This module is used for initialized the bdd
 """
 
-import os
 import sys
 import argparse
 
@@ -22,16 +21,6 @@ from ..models import (
 from ..models.access import Access  # pylint: disable=W0611
 from ..models.group import Group    # pylint: disable=W0611
 from ..models.user import User      # pylint: disable=W0611
-
-
-def usage(argv):
-    """
-    Print the usage of the command
-    """
-    cmd = os.path.basename(argv[0])
-    print('usage: %s <config_uri>' % (cmd))
-    print('  example: "%s development.ini"' % (cmd))
-    sys.exit(1)
 
 
 def main(argv=None):
