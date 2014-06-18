@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# coding : utf-8
 """
 Launch the web app in wsgi container
 """
@@ -17,6 +18,7 @@ logging.config.fileConfig(CONFIG)
 # pylint: disable=C0103
 #    Invalid constant name, openshift need to have "application" variable
 application = get_app(CONFIG, 'main')
+# pylint: enable=C0103
 
 if __name__ == '__main__':
     from wsgiref.simple_server import make_server
