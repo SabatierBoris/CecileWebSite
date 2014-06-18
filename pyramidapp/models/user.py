@@ -2,7 +2,7 @@
 """
 User Model module
 """
-import hashlib
+import hashlib  # pylint: disable=F0401
 
 from sqlalchemy import Table
 from sqlalchemy import ForeignKey

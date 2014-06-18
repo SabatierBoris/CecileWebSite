@@ -4,7 +4,7 @@ This is a unit test for User model
 """
 import unittest
 
-import hashlib
+import hashlib  # pylint: disable=F0401
 
 from pyramidapp.models.group import Group
 from pyramidapp.models.user import User
