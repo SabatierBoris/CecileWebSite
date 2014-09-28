@@ -81,7 +81,7 @@ class TestUser(unittest.TestCase):
 
     def test_user_group(self):
         """
-        Test the association of group to a user
+        Test the association of access to a group
         """
         # pylint: disable=E1101
         user = User("login", "password")

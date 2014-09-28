@@ -4,7 +4,7 @@ This is a unit test for Group model
 """
 import unittest
 
-from pyramidapp.models.right import Right
+from pyramidapp.models.access import Access
 from pyramidapp.models.group import Group
 
 from . import init_testing_db
@@ -54,12 +54,12 @@ class TestGroup(unittest.TestCase):
         self.assertEquals(self.session.query(Group).count(), 1)
         # pylint: enable=E1101
 
-    def test_group_right(self):
+    def test_group_access(self):
         """
-        Test the association of right to a group
+        Test the association of access to a group
         """
-        acc1 = Right('read')
-        acc2 = Right('write')
+        acc1 = Access('read')
+        acc2 = Access('write')
         gp1 = Group('Reader')
 
         # pylint: disable=E1101
@@ -69,20 +69,20 @@ class TestGroup(unittest.TestCase):
         self.session.commit()
 
         gp1 = self.session.query(Group).filter_by(name="Reader").scalar()
-        self.assertEquals(gp1.rights, [])
+        self.assertEquals(gp1.access, [])
 
-        gp1.rights.append(acc1)
+        gp1.access.append(acc1)
         self.session.commit()
         gp1 = self.session.query(Group).filter_by(name="Reader").scalar()
-        self.assertEquals(gp1.rights, [acc1])
+        self.assertEquals(gp1.access, [acc1])
 
-        gp1.rights.append(acc2)
+        gp1.access.append(acc2)
         self.session.commit()
         gp1 = self.session.query(Group).filter_by(name="Reader").scalar()
-        self.assertEquals(gp1.rights, [acc1, acc2])
+        self.assertEquals(gp1.access, [acc1, acc2])
 
-        gp1.rights.remove(acc2)
+        gp1.access.remove(acc2)
         self.session.commit()
         gp1 = self.session.query(Group).filter_by(name="Reader").scalar()
-        self.assertEquals(gp1.rights, [acc1])
+        self.assertEquals(gp1.access, [acc1])
         # pylint: enable=E1101
