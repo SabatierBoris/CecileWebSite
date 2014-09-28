@@ -10,6 +10,7 @@ README = open(os.path.join(HERE, 'README.md')).read()
 CHANGES = open(os.path.join(HERE, 'CHANGES.txt')).read()
 
 REQUIRES = [
+    'six',
     # Base
     'pyramid',
     # Debug
