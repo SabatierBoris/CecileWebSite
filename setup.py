@@ -12,8 +12,12 @@ CHANGES = open(os.path.join(HERE, 'CHANGES.txt')).read()
 REQUIRES = [
     # Base
     'pyramid',
+    # Debug
+    'pyramid_debugtoolbar',
     # BDD
     'sqlalchemy',
+    # Template
+    'pyramid_mako',
 ]
 
 setup(
