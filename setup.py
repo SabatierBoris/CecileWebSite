@@ -20,9 +20,9 @@ REQUIRES = [
     'pyramid_mako',
     # Form
     'WTForms',
-    'WTForms-Alchemy',
+    # 'WTForms-Alchemy',
     # UnitTest
-    # 'WebTest',
+    'WebTest',
 ]
 
 setup(
