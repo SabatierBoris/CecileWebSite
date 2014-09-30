@@ -18,7 +18,7 @@ from ..models import (
     BASE,
 )
 
-from ..models.access import Access  # pylint: disable=W0611
+from ..models.right import Right  # pylint: disable=W0611
 from ..models.group import Group    # pylint: disable=W0611
 from ..models.user import User      # pylint: disable=W0611
 

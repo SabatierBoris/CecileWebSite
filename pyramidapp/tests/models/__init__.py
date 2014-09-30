@@ -9,7 +9,7 @@ from pyramidapp.models import (
     BASE
 )
 
-from pyramidapp.models.access import Access  # pylint: disable=W0611
+from pyramidapp.models.right import Right    # pylint: disable=W0611
 from pyramidapp.models.group import Group    # pylint: disable=W0611
 from pyramidapp.models.user import User      # pylint: disable=W0611
 
