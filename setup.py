@@ -18,6 +18,11 @@ REQUIRES = [
     'sqlalchemy',
     # Template
     'pyramid_mako',
+    # Form
+    'WTForms',
+    'WTForms-Alchemy',
+    # UnitTest
+    'WebTest',
 ]
 
 setup(
