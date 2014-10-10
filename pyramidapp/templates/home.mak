@@ -1,39 +1,39 @@
 <%inherit file="base.mak"/>
 	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="2970x2100/090909/777777&text=Image"/>
+		<img class="img-responsive " src="http://placehold.it/297x210/090909/777777&text=Image" alt="Image"/>
 	</div>
 	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="2970x2100/090909/777777&text=Image"/>
+		<img class="img-responsive " src="http://placehold.it/297x210/090909/777777&text=Image" alt="Image"/>
 	</div>
 	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="2970x2100/090909/777777&text=Image"/>
+		<img class="img-responsive " src="http://placehold.it/297x210/090909/777777&text=Image" alt="Image"/>
 	</div>
 	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="2970x2100/090909/777777&text=Image"/>
+		<img class="img-responsive " src="http://placehold.it/297x210/090909/777777&text=Image" alt="Image"/>
 	</div>
 	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="2970x2100/090909/777777&text=Image"/>
+		<img class="img-responsive " src="http://placehold.it/297x210/090909/777777&text=Image" alt="Image"/>
 	</div>
 	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="2970x2100/090909/777777&text=Image"/>
+		<img class="img-responsive " src="http://placehold.it/297x210/090909/777777&text=Image" alt="Image"/>
 	</div>
 	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="2970x2100/090909/777777&text=Image"/>
+		<img class="img-responsive " src="http://placehold.it/297x210/090909/777777&text=Image" alt="Image"/>
 	</div>
 	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="2970x2100/090909/777777&text=Image"/>
+		<img class="img-responsive " src="http://placehold.it/297x210/090909/777777&text=Image" alt="Image"/>
 	</div>
 	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="2970x2100/090909/777777&text=Image"/>
+		<img class="img-responsive " src="http://placehold.it/297x210/090909/777777&text=Image" alt="Image"/>
 	</div>
 	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="2970x2100/090909/777777&text=Image"/>
+		<img class="img-responsive " src="http://placehold.it/297x210/090909/777777&text=Image" alt="Image"/>
 	</div>
 	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="2970x2100/090909/777777&text=Image"/>
+		<img class="img-responsive " src="http://placehold.it/297x210/090909/777777&text=Image" alt="Image"/>
 	</div>
 	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="2970x2100/090909/777777&text=Image"/>
+		<img class="img-responsive " src="http://placehold.it/297x210/090909/777777&text=Image" alt="Image"/>
 	</div>
 
 	<div class="col-lg-12 text-center">
