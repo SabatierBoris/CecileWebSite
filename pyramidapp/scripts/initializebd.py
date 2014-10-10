@@ -7,6 +7,7 @@ import sys
 import argparse
 import string
 import random
+import logging
 
 from sqlalchemy import engine_from_config
 
@@ -23,6 +24,9 @@ from ..models import (
 from ..models.right import Right
 from ..models.group import Group
 from ..models.user import User
+
+
+LOGGER = logging.getLogger(__name__)
 
 
 def generate_password(size=6, chars=string.ascii_letters+string.digits):
@@ -59,7 +63,7 @@ def init_admin(session):
     admin.groups.append(group)
     session.commit()
     if password:
-        print("Admin password : %s" % password)
+        LOGGER.info('Admin password : %s', password)
 
 
 def main(argv=None):
