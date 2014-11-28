@@ -21,7 +21,7 @@ def groups_finder(login, request):
     user = User.by_login(login)
     request = request
     if user is None:
-        return None
+        return
     for group in user.groups:
         yield group.name
 
