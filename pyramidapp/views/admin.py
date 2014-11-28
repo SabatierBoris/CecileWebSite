@@ -31,7 +31,7 @@ class AdminView(object):
             if self.is_allowed_to_view(all_admin_pages[page]).boolval:
                 accessible_pages[page] = all_admin_pages[page]
 
-        if accessible_pages == []:
+        if accessible_pages == {}:
             return HTTPFound(self.request.route_url('login'))
 
         return {'title': 'Administration', 'pages': accessible_pages}
