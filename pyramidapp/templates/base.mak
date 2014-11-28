@@ -33,7 +33,7 @@
 				</ul>
 				% if administration_pages:
 					<ul class="nav navbar-nav top-separator">
-						% for page in administration_pages:
+						% for page in sorted(administration_pages):
 							% if request.url==request.route_url(administration_pages[page]):
 								<li class="active">
 							% else:
