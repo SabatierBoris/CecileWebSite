@@ -4,6 +4,7 @@ The group view part
 from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
 
+from pyramidapp.models.security import MenuAdministration
 from ..models.group import Group, GroupRightAccess
 from ..models.right import Right
 
@@ -17,6 +18,8 @@ class GroupView(object):
     def __init__(self, request):
         self.request = request
 
+    @MenuAdministration(display='Gestion des groupes',
+                        route_name='group_list')
     @view_config(route_name='group_list',
                  renderer='admin/groupList.mak',
                  permission='admin')

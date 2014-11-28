@@ -4,9 +4,20 @@ Security module
 """
 
 from pyramid.security import Allow
+from pyramid.threadlocal import get_current_registry
+from pyramid.interfaces import IRouteRequest, IViewClassifier, ISecuredView
+from zope.interface.declarations import providedBy
 
 from pyramidapp.models.user import User
 from pyramidapp.models.group import Group
+
+
+class MenuAdministration(object):
+    pages={}
+    def __init__(self,display,route_name):
+        MenuAdministration.pages[display] = route_name
+    def __call__(self,func):
+        return func
 
 
 def groups_finder(login, request):
@@ -57,3 +68,39 @@ class ACL(object):
         for group in Group.all():
             for right in group.rights:
                 yield(Allow, group.name, right.name)
+
+
+def is_allowed_to_view(request, view_name):
+    """
+    Check if the current user have the right to the view
+    """
+    try:
+        reg = request.registry
+    except AttributeError:
+        reg = get_current_registry()
+
+    request_iface = reg.queryUtility(IRouteRequest, name=view_name)
+    provides = [IViewClassifier,
+            request_iface,
+            providedBy(request.context)]
+    view = reg.adapters.lookup(provides, ISecuredView, name='')
+
+    assert view is not None
+    return view.__permitted__(request.context, request)
+
+def get_allowed_administration_page(request):
+    """
+    Get all accecible administration page
+    """
+    accessible_pages = {}
+
+    for page in MenuAdministration.pages:
+        if is_allowed_to_view(request, MenuAdministration.pages[page]).boolval:
+            accessible_pages[page] = MenuAdministration.pages[page]
+
+    return accessible_pages
+
+from pyramid.events import subscriber, BeforeRender
+@subscriber(BeforeRender)
+def add_global(event):
+    event['administration_pages']=get_allowed_administration_page(event['request'])

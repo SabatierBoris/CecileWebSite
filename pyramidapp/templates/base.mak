@@ -12,25 +12,45 @@
 			<div id="real-nav" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
 					<li><a href="">Dessins</a></li>
-					<li><a href="" >Architecture</a>
+					<li><a href="" >Architecture</a></li>
+					<li>
 						<ul class="nav navbar-nav">
 							<li><a href="#">L1</a></li>
-							<ul class="nav navbar-nav">
-								<li class="active"><a href="#">P1</a></li>
-								<li><a href="#">P2</a></li>
-								<li><a href="#">P3</a></li>
-								<li><a href="#">P4</a></li>
-							</ul>
+							<li>
+								<ul class="nav navbar-nav">
+									<li class="active"><a href="#">P1</a></li>
+									<li><a href="#">P2</a></li>
+									<li><a href="#">P3</a></li>
+									<li><a href="#">P4</a></li>
+								</ul>
+							</li>
 						</ul>
 					</li>
 					<li><a href="">Photos</a></li>
 					<li><a href="">Muss</a></li>
 					<li><a href="">Texts</a></li>
 					<li><a href="">Objets</a></li>
-					% if request.authenticated_userid:
-						<li><a href="${request.route_url('logout')}">Deconnexion</a></li>
-					% endif
 				</ul>
+				% if administration_pages:
+					<ul class="nav navbar-nav top-separator">
+						% for page in administration_pages:
+							% if request.url==request.route_url(administration_pages[page]):
+								<li class="active">
+							% else:
+								<li>
+							% endif
+								<a href="${request.route_url(administration_pages[page])}">
+									${page}
+								</a>
+							</li>
+						% endfor
+					</ul>
+				% endif
+				% if request.authenticated_userid:
+					<ul class="nav navbar-nav top-separator">
+						<li><a href="${request.route_url('logout')}">Deconnexion</a></li>
+					</ul>
+				% endif
 			</div>
 			<footer class="collapse navbar-collapse text-center">
 				Created by Bobby
