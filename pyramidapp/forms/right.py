@@ -9,6 +9,7 @@ from wtforms.fields import (
 
 
 class RightForm(CSRFSecureForm):
+    # pylint: disable=R0903
     """
     Form for right edition
     """

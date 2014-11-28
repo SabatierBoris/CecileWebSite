@@ -10,8 +10,6 @@ from . import init_testing_db
 
 
 class TestRight(unittest.TestCase):
-    # pylint: disable=R0904
-    #    Too many pyblic methods: we are a subclass of unittest.TestCase
     """
     Test of right
     """

@@ -26,6 +26,7 @@ class GroupAccessForm(Form):
 
 
 class UserForm(CSRFSecureForm):
+    # pylint: disable=R0903
     """
     Form for user edition
     """

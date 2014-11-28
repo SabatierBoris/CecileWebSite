@@ -26,6 +26,7 @@ class RightAccessForm(Form):
 
 
 class GroupForm(CSRFSecureForm):
+    # pylint: disable=R0903
     """
     Form for editing group
     """

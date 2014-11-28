@@ -11,6 +11,7 @@ from wtforms import validators
 
 
 class LoginForm(CSRFSecureForm):
+    # pylint: disable=R0903
     """
     Form for login a user
     """

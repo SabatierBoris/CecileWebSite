@@ -5,8 +5,6 @@ import unittest
 
 
 class TestExample(unittest.TestCase):
-    # pylint: disable=R0904
-    #    Too many pyblic methods: we are a subclass of unittest.TestCase
     """
     Test of test
     """
@@ -15,3 +13,9 @@ class TestExample(unittest.TestCase):
         This is a example of a unittest
         """
         self.assertFalse(False)
+
+    def test_two(self):
+        """
+        This is a example of a unittest
+        """
+        self.assertTrue(True)
