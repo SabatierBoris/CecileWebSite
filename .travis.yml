@@ -11,7 +11,7 @@ script:
 - pep8 pyramidapp setup.py wsgi.py
 - pylint pyramidapp setup.py wsgi.py
 - nosetests
-- gem install httpclient:2.3.4.1
+  #- gem install httpclient:2.3.4.1
 deploy:
   provider: openshift
   user: sabatier.boris@gmail.com
