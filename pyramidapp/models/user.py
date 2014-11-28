@@ -79,6 +79,24 @@ class User(BASE, Dateable):
         return DB_SESSION.query(User).filter(User.uid == uid).first()
 
     @classmethod
+    def by_login(cls, login):
+        """
+        Get a user with the login
+        """
+        # pylint: disable=E1101
+        return DB_SESSION.query(User).filter(User.login == login).first()
+
+    @classmethod
+    def by_login_password(cls, login, password):
+        """
+        Get a user with the login and password
+        """
+        # pylint: disable=E1101
+        query = DB_SESSION.query(User)
+        filter1 = query.filter(User.login == login)
+        return filter1.filter(User.password == password).first()
+
+    @classmethod
     def get_session(cls):
         """
         Get the sqlalchemy session

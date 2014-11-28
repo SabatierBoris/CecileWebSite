@@ -9,5 +9,6 @@ def home(request):
     """
     Bouboup
     """
+
     request = request
     return {}

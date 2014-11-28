@@ -19,8 +19,12 @@ class UserView(object):
     def __init__(self, request):
         self.request = request
 
-    @view_config(route_name='user_list', renderer='admin/userList.mak')
-    @view_config(route_name='user_list:new', renderer='admin/userList.mak')
+    @view_config(route_name='user_list',
+                 renderer='admin/userList.mak',
+                 permission='admin')
+    @view_config(route_name='user_list:new',
+                 renderer='admin/userList.mak',
+                 permission='admin')
     def user_list(self):
         """
         Get the list of all users

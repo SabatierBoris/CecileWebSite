@@ -15,8 +15,12 @@ class RightView(object):
     def __init__(self, request):
         self.request = request
 
-    @view_config(route_name='right_list', renderer='admin/rightList.mak')
-    @view_config(route_name='right_list:new', renderer='admin/rightList.mak')
+    @view_config(route_name='right_list',
+                 renderer='admin/rightList.mak',
+                 permission='admin')
+    @view_config(route_name='right_list:new',
+                 renderer='admin/rightList.mak',
+                 permission='admin')
     def right_list(self):
         """
         Get the list of all right
@@ -56,7 +60,7 @@ class RightView(object):
                 'right_list': right_list,
                 'forms': forms}
 
-    @view_config(route_name='right_delete')
+    @view_config(route_name='right_delete', permission='admin')
     def right_delete(self):
         """
         Delete a right

@@ -17,8 +17,12 @@ class GroupView(object):
     def __init__(self, request):
         self.request = request
 
-    @view_config(route_name='group_list', renderer='admin/groupList.mak')
-    @view_config(route_name='group_list:new', renderer='admin/groupList.mak')
+    @view_config(route_name='group_list',
+                 renderer='admin/groupList.mak',
+                 permission='admin')
+    @view_config(route_name='group_list:new',
+                 renderer='admin/groupList.mak',
+                 permission='admin')
     def group_list(self):
         """
         Get the list of all groups
@@ -56,7 +60,7 @@ class GroupView(object):
                 'group_list': group_list,
                 'forms': forms}
 
-    @view_config(route_name='group_delete')
+    @view_config(route_name='group_delete', permission='admin')
     def group_delete(self):
         """
         Delete a group

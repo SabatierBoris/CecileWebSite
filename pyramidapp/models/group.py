@@ -2,6 +2,7 @@
 """
 Group Model module
 """
+
 from sqlalchemy import Table
 from sqlalchemy import Column
 from sqlalchemy import ForeignKey

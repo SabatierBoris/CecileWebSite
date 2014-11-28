@@ -1,6 +1,6 @@
 <%inherit file="../base.mak"/>
 			<div class="col-md-12">
-				<a id="add" class="btn btn-primary btn-xs" href="${request.route_url('right_list:new',new='new')}">
+				<a class="button-with-margin btn btn-primary btn-xs" href="${request.route_url('right_list:new',new='new')}">
 					<i class="fa fa-plus-square fa-fw"></i> Ajouter
 				</a>
 			</div>

@@ -7,7 +7,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="">Cécile MUSSIER</a>
+				<a class="navbar-brand" href="${request.route_url('home')}">Cécile MUSSIER</a>
 			</header>
 			<div id="real-nav" class="collapse navbar-collapse">
 				<ul class="nav navbar-nav">
@@ -27,6 +27,9 @@
 					<li><a href="">Muss</a></li>
 					<li><a href="">Texts</a></li>
 					<li><a href="">Objets</a></li>
+					% if request.authenticated_userid:
+						<li><a href="${request.route_url('logout')}">Deconnexion</a></li>
+					% endif
 				</ul>
 			</div>
 			<footer class="collapse navbar-collapse text-center">
