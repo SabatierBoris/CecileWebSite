@@ -9,6 +9,8 @@ from pyramid.security import forget
 
 from pyramidapp.forms.login import LoginForm
 from pyramidapp.models.user import User
+import logging
+LOG = logging.getLogger(__name__)
 
 
 class LoginView(object):
@@ -37,6 +39,7 @@ class LoginView(object):
                                              form.password.data)
                 if use is not None:
                     headers = remember(self.request, use.login)
+                    LOG.info('%s is now logged', use.login)
                     return HTTPFound(location=referer, headers=headers)
                 else:
                     form.errors['user'] = 'Login ou Password incorrect'
@@ -47,6 +50,7 @@ class LoginView(object):
         """
         The logout logic
         """
+        LOG.info('Logout')
         headers = forget(self.request)
         return HTTPFound(location=self.request.route_url('home'),
                          headers=headers)
