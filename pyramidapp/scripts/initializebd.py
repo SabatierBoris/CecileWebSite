@@ -24,7 +24,9 @@ from ..models import (
 from ..models.right import Right
 from ..models.group import Group
 from ..models.user import User
+# pylint: disable=W0611
 from ..models.category import Category
+# pylint: enable=W0611
 
 
 LOGGER = logging.getLogger(__name__)

@@ -7,6 +7,7 @@ from pyramidapp.models.security import is_allowed_to_view
 
 
 class AdminView(object):
+    # pylint: disable=R0903
     """
     The home admin view logic
     """

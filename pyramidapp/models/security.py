@@ -7,16 +7,29 @@ from pyramid.security import Allow
 from pyramid.threadlocal import get_current_registry
 from pyramid.interfaces import IRouteRequest, IViewClassifier, ISecuredView
 from zope.interface.declarations import providedBy
+from pyramid.events import subscriber, BeforeRender
 
 from pyramidapp.models.user import User
 from pyramidapp.models.group import Group
 
 
 class MenuAdministration(object):
-    pages={}
-    def __init__(self,display,route_name):
-        MenuAdministration.pages[display] = route_name
-    def __call__(self,func):
+    # pylint: disable=R0903
+    """
+    Menu Administration decorator to generat automaticaly menu
+    """
+    PAGES = {}
+
+    def __init__(self, display, route_name):
+        """
+        Constructor
+        """
+        MenuAdministration.PAGES[display] = route_name
+
+    def __call__(self, func):
+        """
+        Decorator
+        """
         return func
 
 
@@ -81,12 +94,13 @@ def is_allowed_to_view(request, view_name):
 
     request_iface = reg.queryUtility(IRouteRequest, name=view_name)
     provides = [IViewClassifier,
-            request_iface,
-            providedBy(request.context)]
+                request_iface,
+                providedBy(request.context)]
     view = reg.adapters.lookup(provides, ISecuredView, name='')
 
     assert view is not None
     return view.__permitted__(request.context, request)
+
 
 def get_allowed_administration_page(request):
     """
@@ -94,13 +108,17 @@ def get_allowed_administration_page(request):
     """
     accessible_pages = {}
 
-    for page in MenuAdministration.pages:
-        if is_allowed_to_view(request, MenuAdministration.pages[page]).boolval:
-            accessible_pages[page] = MenuAdministration.pages[page]
+    for page in MenuAdministration.PAGES:
+        if is_allowed_to_view(request, MenuAdministration.PAGES[page]).boolval:
+            accessible_pages[page] = MenuAdministration.PAGES[page]
 
     return accessible_pages
 
-from pyramid.events import subscriber, BeforeRender
+
 @subscriber(BeforeRender)
 def add_global(event):
-    event['administration_pages']=get_allowed_administration_page(event['request'])
+    """
+    Add the administration_pages for all render
+    """
+    pages = get_allowed_administration_page(event['request'])
+    event['administration_pages'] = pages
