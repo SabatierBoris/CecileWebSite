@@ -44,7 +44,7 @@ def init_admin(session):
     query = session.query(Right).filter_by(name='administration')
     right = query.scalar()
     if right is None:
-        right = Right('administration')
+        right = Right('admin')
         session.add(right)
 
     query = session.query(Group).filter_by(name='admins')
