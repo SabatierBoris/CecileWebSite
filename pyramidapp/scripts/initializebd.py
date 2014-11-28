@@ -24,6 +24,7 @@ from ..models import (
 from ..models.right import Right
 from ..models.group import Group
 from ..models.user import User
+from ..models.category import Category
 
 
 LOGGER = logging.getLogger(__name__)
