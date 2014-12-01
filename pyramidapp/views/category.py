@@ -20,15 +20,20 @@ class CategoryView(object):
         """
         Display the content of a category
         """
-        uid = int(self.request.matchdict.get('uid', -1))
-        name = self.request.matchdict.get('name', '')
+        idcategory = int(self.request.matchdict.get('idCategory', -1))
+        namecategory = self.request.matchdict.get('nameCategory', '')
 
-        return {}
+        return {'idCategory': idcategory,
+                'nameCategory': namecategory}
 
     @MenuAdministration(order=1,
                         display='Nouvelle categorie',
                         route_name='new_category',
                         route_name_category='new_sub_category')
+    @view_config(route_name='new_sub_category',
+                 # renderer='admin/category.mak',
+                 renderer='home.mak',
+                 permission='write')
     @view_config(route_name='new_category',
                  # renderer='admin/category.mak',
                  renderer='home.mak',
@@ -37,4 +42,8 @@ class CategoryView(object):
         """
         Display the content of a category
         """
-        return {}
+        idcategory = int(self.request.matchdict.get('idCategory', -1))
+        namecategory = self.request.matchdict.get('nameCategory', None)
+
+        return {'idCategory': idcategory,
+                'nameCategory': namecategory}

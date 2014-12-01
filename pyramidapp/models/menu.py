@@ -73,8 +73,8 @@ class MenuAdministration(object):
         """
         accessible_pages = {}
         request = event['request']
-        idcategory = event.get('idCategory', None)
-        namecategory = event.get('nameCategory', None)
+        idcategory = event.rendering_val.get('idCategory', None)
+        namecategory = event.rendering_val.get('nameCategory', None)
 
         for page in MenuAdministration.PAGES:
             item = MenuAdministration.PAGES[page]
@@ -84,9 +84,9 @@ class MenuAdministration(object):
                namecategory and \
                MenuAdministration.is_allowed_to_view(request,
                                                      item.route_name_category):
-                    item.url = request.route_url(item.route_name_category,
-                                                 idcategory,
-                                                 namecategory)
+                item.url = request.route_url(item.route_name_category,
+                                             idCategory=idcategory,
+                                             nameCategory=namecategory)
             elif item.route_name and \
                     MenuAdministration.is_allowed_to_view(request,
                                                           item.route_name):

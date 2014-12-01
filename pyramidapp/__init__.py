@@ -50,9 +50,12 @@ def main(global_config, **settings):
 
     config.add_route('home', '/')
 
-    config.add_route('view_category', r'/category-{uid:\d+}-{name}/index.html')
-    config.add_route('new_category', r'/new.html')
-#    config.add_route('new_category', r'/category-{uid:\d+}-{name}/new.html')
+    config.add_route('view_category',
+                     r'/category-{idCategory:\d+}-{nameCategory}/index.html')
+    config.add_route('new_category', r'/new-category.html')
+    config.add_route('new_sub_category',
+                     r'/category-{idCategory:\d+}-{nameCategory}/%s' % (
+                         'new-category.html'))
     # Administration route
     config.add_route('home_admin', r'/admin/index.html')
 
