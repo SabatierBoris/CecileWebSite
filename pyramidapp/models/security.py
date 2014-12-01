@@ -4,33 +4,9 @@ Security module
 """
 
 from pyramid.security import Allow
-from pyramid.threadlocal import get_current_registry
-from pyramid.interfaces import IRouteRequest, IViewClassifier, ISecuredView
-from zope.interface.declarations import providedBy
-from pyramid.events import subscriber, BeforeRender
 
 from pyramidapp.models.user import User
 from pyramidapp.models.group import Group
-
-
-class MenuAdministration(object):
-    # pylint: disable=R0903
-    """
-    Menu Administration decorator to generat automaticaly menu
-    """
-    PAGES = {}
-
-    def __init__(self, display, route_name):
-        """
-        Constructor
-        """
-        MenuAdministration.PAGES[display] = route_name
-
-    def __call__(self, func):
-        """
-        Decorator
-        """
-        return func
 
 
 def groups_finder(login, request):
@@ -81,44 +57,3 @@ class ACL(object):
         for group in Group.all():
             for right in group.rights:
                 yield(Allow, group.name, right.name)
-
-
-def is_allowed_to_view(request, view_name):
-    """
-    Check if the current user have the right to the view
-    """
-    try:
-        reg = request.registry
-    except AttributeError:
-        reg = get_current_registry()
-
-    request_iface = reg.queryUtility(IRouteRequest, name=view_name)
-    provides = [IViewClassifier,
-                request_iface,
-                providedBy(request.context)]
-    view = reg.adapters.lookup(provides, ISecuredView, name='')
-
-    assert view is not None
-    return view.__permitted__(request.context, request)
-
-
-def get_allowed_administration_page(request):
-    """
-    Get all accecible administration page
-    """
-    accessible_pages = {}
-
-    for page in MenuAdministration.PAGES:
-        if is_allowed_to_view(request, MenuAdministration.PAGES[page]).boolval:
-            accessible_pages[page] = MenuAdministration.PAGES[page]
-
-    return accessible_pages
-
-
-@subscriber(BeforeRender)
-def add_global(event):
-    """
-    Add the administration_pages for all render
-    """
-    pages = get_allowed_administration_page(event['request'])
-    event['administration_pages'] = pages

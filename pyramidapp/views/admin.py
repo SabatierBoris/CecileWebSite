@@ -2,8 +2,6 @@
 The home admin view part
 """
 from pyramid.view import view_config
-from pyramid.httpexceptions import HTTPFound
-from pyramidapp.models.security import is_allowed_to_view
 
 
 class AdminView(object):
@@ -20,17 +18,7 @@ class AdminView(object):
         """
         List the administration page depending of the user right
         """
-        all_admin_pages = {'Rights': 'right_list',
-                           'Groups': 'group_list',
-                           'Users': 'user_list'}
-
+        self = self
         accessible_pages = {}
-
-        for page in all_admin_pages:
-            if is_allowed_to_view(self.request, all_admin_pages[page]).boolval:
-                accessible_pages[page] = all_admin_pages[page]
-
-        if accessible_pages == {}:
-            return HTTPFound(self.request.route_url('login'))
 
         return {'title': 'Administration', 'pages': accessible_pages}

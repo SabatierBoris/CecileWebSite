@@ -4,7 +4,7 @@ The right view part
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
 
-from pyramidapp.models.security import MenuAdministration
+from pyramidapp.models.menu import MenuAdministration
 from ..models.right import Right
 from ..forms.right import RightForm
 
@@ -16,8 +16,10 @@ class RightView(object):
     def __init__(self, request):
         self.request = request
 
-    @MenuAdministration(display='Gestion des droits',
-                        route_name='right_list')
+    @MenuAdministration(order=20,
+                        display='Gestion des droits',
+                        route_name='right_list',
+                        route_name_category=None)
     @view_config(route_name='right_list',
                  renderer='admin/rightList.mak',
                  permission='admin')

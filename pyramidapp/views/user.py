@@ -6,7 +6,7 @@ from pyramid.httpexceptions import (
     HTTPFound,
 )
 
-from pyramidapp.models.security import MenuAdministration
+from pyramidapp.models.menu import MenuAdministration
 from ..forms.user import UserForm
 
 from ..models.user import User, UserGroupAccess
@@ -20,8 +20,10 @@ class UserView(object):
     def __init__(self, request):
         self.request = request
 
-    @MenuAdministration(display='Gestion des utilisateurs',
-                        route_name='user_list')
+    @MenuAdministration(order=22,
+                        display='Gestion des utilisateurs',
+                        route_name='user_list',
+                        route_name_category=None)
     @view_config(route_name='user_list',
                  renderer='admin/userList.mak',
                  permission='admin')

@@ -34,13 +34,13 @@
 				% if administration_pages:
 					<ul class="nav navbar-nav top-separator">
 						% for page in sorted(administration_pages):
-							% if request.url==request.route_url(administration_pages[page]):
+							% if request.url==administration_pages[page].url:
 								<li class="active">
 							% else:
 								<li>
 							% endif
-								<a href="${request.route_url(administration_pages[page])}">
-									${page}
+								<a href="${administration_pages[page].url}">
+									${administration_pages[page].display}
 								</a>
 							</li>
 						% endfor
