@@ -29,29 +29,6 @@
 			</header>
 			<div id="real-nav" class="collapse navbar-collapse">
 				${menuCategories(categories_pages)}
-				<!--
-				<ul class="nav navbar-nav">
-					<li><a href="">Dessins</a></li>
-					<li><a href="" >Architecture</a></li>
-					<li>
-						<ul class="nav navbar-nav">
-							<li><a href="#">L1</a></li>
-							<li>
-								<ul class="nav navbar-nav">
-									<li class="active"><a href="#">P1</a></li>
-									<li><a href="#">P2</a></li>
-									<li><a href="#">P3</a></li>
-									<li><a href="#">P4</a></li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-					<li><a href="">Photos</a></li>
-					<li><a href="">Muss</a></li>
-					<li><a href="">Texts</a></li>
-					<li><a href="">Objets</a></li>
-				</ul>
-				-->
 				% if administration_pages:
 					<ul class="nav navbar-nav top-separator">
 						% for page in sorted(administration_pages):
