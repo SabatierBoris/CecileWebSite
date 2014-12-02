@@ -57,3 +57,22 @@ class Category(BASE, Dateable):
         Get the sqlalchemy session
         """
         return DB_SESSION
+
+    @classmethod
+    def get_with_direct_parent(cls, parent):
+        """
+        Get all category with a direct parent
+        """
+        # pylint: disable=E1101
+        cat = DB_SESSION.query(Category)
+        return cat.filter(Category.parent == parent).all()
+
+    def is_a_child_of(self, parent):
+        """
+        Know if self is a child (or sub child) of parent
+        """
+        if self.parent is None:
+            return False
+        if self.parent == parent:
+            return True
+        return self.parent.is_a_child_of(parent)

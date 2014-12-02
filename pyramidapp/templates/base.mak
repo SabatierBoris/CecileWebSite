@@ -1,3 +1,21 @@
+<%def name="menuCategories(list)">
+	% if list:
+		<ul class="nav navbar-nav">
+			% for page in sorted(list):
+				% if list[page].category.uid == idCategory:
+					<li class="active">
+				% else:
+					<li>
+				% endif
+					<a href="${request.route_url('view_category',idCategory=list[page].category.uid,nameCategory=list[page].category.name)}">
+						${list[page].category.name}
+					</a>
+					${menuCategories(list[page].sublist)}
+				</li>
+			% endfor
+		</ul>
+	% endif
+</%def>
 <%inherit file="layout.mak"/>
 		<nav class="navbar navbar-inverse navbar-fixed-left" role="navigation">
 			<header class="navbar-header">
@@ -10,6 +28,8 @@
 				<a class="navbar-brand" href="${request.route_url('home')}">Cécile MUSSIER</a>
 			</header>
 			<div id="real-nav" class="collapse navbar-collapse">
+				${menuCategories(categories_pages)}
+				<!--
 				<ul class="nav navbar-nav">
 					<li><a href="">Dessins</a></li>
 					<li><a href="" >Architecture</a></li>
@@ -31,6 +51,7 @@
 					<li><a href="">Texts</a></li>
 					<li><a href="">Objets</a></li>
 				</ul>
+				-->
 				% if administration_pages:
 					<ul class="nav navbar-nav top-separator">
 						% for page in sorted(administration_pages):
