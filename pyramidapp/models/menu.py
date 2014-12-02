@@ -116,7 +116,6 @@ def get_categories_menu(event):
         Function to get the category of a level to a target
         """
         menu = {}
-        print("Bouboup")
         categories = Category.get_with_direct_parent(parent)
 
         for category in categories:

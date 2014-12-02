@@ -17,6 +17,7 @@ class CategoryView(object):
     def __init__(self, request):
         self.request = request
 
+    @view_config(route_name='home', renderer='home.mak')
     @view_config(route_name='view_category',
                  renderer='home.mak')
     def view_category(self):
@@ -26,8 +27,16 @@ class CategoryView(object):
         idcategory = int(self.request.matchdict.get('idCategory', -1))
         namecategory = self.request.matchdict.get('nameCategory', '')
 
+        category = Category.by_uid(idcategory)
+        contents = None
+        if category:
+            contents = category.get_content()
+        else:
+            contents = Category.get_with_direct_parent(None)
+
         return {'idCategory': idcategory,
-                'nameCategory': namecategory}
+                'nameCategory': namecategory,
+                'contents': contents}
 
     @MenuAdministration(order=1,
                         display='Nouvelle categorie',

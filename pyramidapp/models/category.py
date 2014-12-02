@@ -35,6 +35,31 @@ class Category(BASE, Dateable):
     children = relationship("Category",
                             backref=backref('category', remote_side=[uid]))
 
+    @property
+    def thumbnail(self):
+        """
+        Get the thumbnail of the category
+        """
+        base = 'http://placehold.it/2970x2100/090909/777777&text='
+        return "%s%s" % (base, self.name)
+
+    def get_content(self):
+        """
+        Get the content of the category
+        """
+        for child in self.children:
+            yield child
+
+    def is_a_child_of(self, parent):
+        """
+        Know if self is a child (or sub child) of parent
+        """
+        if self.parent is None:
+            return False
+        if self.parent == parent:
+            return True
+        return self.parent.is_a_child_of(parent)
+
     @classmethod
     def all(cls):
         """
@@ -66,13 +91,3 @@ class Category(BASE, Dateable):
         # pylint: disable=E1101
         cat = DB_SESSION.query(Category)
         return cat.filter(Category.parent == parent).all()
-
-    def is_a_child_of(self, parent):
-        """
-        Know if self is a child (or sub child) of parent
-        """
-        if self.parent is None:
-            return False
-        if self.parent == parent:
-            return True
-        return self.parent.is_a_child_of(parent)

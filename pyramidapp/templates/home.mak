@@ -1,40 +1,11 @@
 <%inherit file="base.mak"/>
-	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="Image"/>
-	</div>
-	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="Image"/>
-	</div>
-	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="Image"/>
-	</div>
-	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="Image"/>
-	</div>
-	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="Image"/>
-	</div>
-	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="Image"/>
-	</div>
-	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="Image"/>
-	</div>
-	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="Image"/>
-	</div>
-	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="Image"/>
-	</div>
-	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="Image"/>
-	</div>
-	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="Image"/>
-	</div>
-	<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-		<img class="img-responsive " src="http://placehold.it/2970x2100/090909/777777&text=Image" alt="Image"/>
-	</div>
+	% for content in contents:
+		<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
+			<a href="${getContentLink(content)}">
+				<img class="img-responsive " src="${content.thumbnail}" alt="${content.name}"/>
+			</a>
+		</div>
+	% endfor
 
 	<div class="col-lg-12 text-center">
 		<ul class="pagination">
@@ -67,27 +38,12 @@
 	<link rel="stylesheet" href="${request.static_url('pyramidapp:static/css/4-col-portfolio.css')}"/>
 </%block>
 
-##<%def name="fooTest(param)">
-##	Test : ${param.value}
-##</%def>
-##
-##<%def name="fooSubTest(param)">
-##	SubTest : ${param.value}
-##</%def>
-##
-##<%def name="foo(param)">
-##	% if hasattr(param, "new_value"):
-##		${fooSubTest(param)}
-##	% else:
-##		${fooTest(param)}
-##	% endif
-##</%def>
-##
-##<div id="page">
-##	${project}
-##</div>
-##
-##
-##% for row in plop:
-##	${foo(row)}
-##% endfor
+<%def name="getContentLink(content)">
+	% if content.__class__.__name__ == 'Category':
+		${getCategoryLink(content)}
+	% endif
+</%def>
+
+<%def name="getCategoryLink(category)">
+	${request.route_url('view_category',idCategory=category.uid,nameCategory=category.name)}
+</%def>
