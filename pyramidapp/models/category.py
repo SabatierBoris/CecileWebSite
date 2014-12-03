@@ -5,6 +5,7 @@ Category Model module
 
 from sqlalchemy import Column
 from sqlalchemy import ForeignKey
+from sqlalchemy import UniqueConstraint
 from sqlalchemy import Integer
 from sqlalchemy import String
 
@@ -28,12 +29,14 @@ class Category(BASE, Dateable):
     parent_id = Column(Integer,
                        ForeignKey('category.uid'))
     name = Column(String,
-                  unique=True,
                   nullable=False,
                   info={'trim': True})
     parent = relationship("Category", remote_side=[uid])
     children = relationship("Category",
                             backref=backref('category', remote_side=[uid]))
+    __table_args__ = (UniqueConstraint('name',
+                                       'parent_id',
+                                       name='cat_by_parent'),)
 
     @property
     def thumbnail(self):

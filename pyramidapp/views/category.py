@@ -7,6 +7,7 @@ from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 
 from pyramidapp.models.menu import MenuAdministration
 from pyramidapp.models.category import Category
+from pyramidapp.models.mypaginate import MyPage
 from pyramidapp.forms.category import CategoryForm
 
 
@@ -26,17 +27,22 @@ class CategoryView(object):
         """
         idcategory = int(self.request.matchdict.get('idCategory', -1))
         namecategory = self.request.matchdict.get('nameCategory', '')
+        current_page = self.request.GET.get('page', 1)
 
         category = Category.by_uid(idcategory)
         contents = None
         if category:
-            contents = category.get_content()
+            contents = list(category.get_content())
         else:
             contents = Category.get_with_direct_parent(None)
+        paginated_contents = MyPage(contents,
+                                    page=current_page,
+                                    items_per_page=12)
 
         return {'idCategory': idcategory,
                 'nameCategory': namecategory,
-                'contents': contents}
+                'contents': paginated_contents,
+                'pagesLink': paginated_contents.get_pages(url='?page=$page')}
 
     @MenuAdministration(order=1,
                         display='Nouvelle categorie',

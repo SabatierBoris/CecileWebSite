@@ -1,35 +1,24 @@
 <%inherit file="base.mak"/>
 	% for content in contents:
 		<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-			<a href="${getContentLink(content)}">
+			<% url = getContentLink(content) %>
+			<a href="${url}">
 				<img class="img-responsive " src="${content.thumbnail}" alt="${content.name}"/>
 			</a>
 		</div>
 	% endfor
 
-	<div class="col-lg-12 text-center">
+	<div class="col-xs-12 text-center">
 		<ul class="pagination">
-			<li>
-				<a href="">&laquo;</a>
-			</li>
-			<li>
-				<a href="">11</a>
-			</li>
-			<li>
-				<a href="">12</a>
-			</li>
-			<li class="active">
-				<a href="">13</a>
-			</li>
-			<li>
-				<a href="">14</a>
-			</li>
-			<li>
-				<a href="">15</a>
-			</li>
-			<li>
-				<a href="">&raquo;</a>
-			</li>
+			% for link in pagesLink:	
+				% if link[2]:
+					<li class="active">
+				% else:
+					<li>
+				% endif
+					<a href="${link[1]}">${link[0]}</a>
+				</li>
+			% endfor
 		</ul>
 	</div>
 
@@ -40,10 +29,10 @@
 
 <%def name="getContentLink(content)">
 	% if content.__class__.__name__ == 'Category':
-		${getCategoryLink(content)}
+		<% return getCategoryLink(content) %>
 	% endif
 </%def>
 
 <%def name="getCategoryLink(category)">
-	${request.route_url('view_category',idCategory=category.uid,nameCategory=category.name)}
+	<% return request.route_url('view_category',idCategory=category.uid,nameCategory=category.name) %>
 </%def>

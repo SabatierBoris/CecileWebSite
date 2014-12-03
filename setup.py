@@ -20,7 +20,8 @@ REQUIRES = [
     'pyramid_mako',
     # Form
     'WTForms',
-    # 'WTForms-Alchemy',
+    # Pagination
+    'paginate',
     # UnitTest
     'WebTest',
 ]
