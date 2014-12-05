@@ -1,4 +1,4 @@
-# coding : utf-8
+# vim: set fileencoding=utf-8 :
 """
 This module test the models part of the project
 """

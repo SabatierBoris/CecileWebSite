@@ -1,4 +1,4 @@
-# coding : utf-8
+# vim: set fileencoding=utf-8 :
 """
 This module is used for initialized the bdd
 """

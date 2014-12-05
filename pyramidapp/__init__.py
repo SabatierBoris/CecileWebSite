@@ -1,4 +1,4 @@
-# coding : utf-8
+# vim: set fileencoding=utf-8 :
 """
 __init__ file of the pyramid application
 Contain the main function

@@ -1,4 +1,4 @@
-# coding : utf-8
+# vim: set fileencoding=utf-8 :
 """
 Module of the model part
 """

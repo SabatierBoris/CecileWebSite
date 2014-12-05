@@ -1,3 +1,4 @@
+# vim: set fileencoding=utf-8 :
 """
 The home admin view part
 """

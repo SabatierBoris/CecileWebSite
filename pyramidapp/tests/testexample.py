@@ -1,3 +1,4 @@
+# vim: set fileencoding=utf-8 :
 """
 This is a example of a unittest module
 """

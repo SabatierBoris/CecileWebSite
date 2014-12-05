@@ -1,4 +1,4 @@
-# coding : utf-8
+# vim: set fileencoding=utf-8 :
 """
 This is a unit test for User model
 """
