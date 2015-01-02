@@ -8,11 +8,13 @@ from pyramid.authentication import AuthTktAuthenticationPolicy
 from pyramid.response import Response
 from pyramid.session import SignedCookieSessionFactory
 
-from sqlalchemy import engine_from_config
+from sqlalchemy import engine_from_config, event
 
 from .models import DB_SESSION, BASE
 from .models.security import groups_finder
 from .models.security import ACL
+from pyramidapp.models.item import Item
+import os
 
 
 class RootFactory(object):
@@ -33,7 +35,18 @@ def main(global_config, **settings):
     global_config = global_config  # Remove W0613
 
     engine = engine_from_config(settings, 'sqlalchemy.')
+
+
+    @event.listens_for(engine, "connect")
+    def do_connect(dbapi_connection, connection_record):
+        if engine.dialect.name == "sqlite":
+            dbapi_connection.isolation_level = None
+
     DB_SESSION.configure(bind=engine)
+    if engine.driver == 'pysqlite':
+        # Set isolation level to None for sqlite for be able to use nested_session
+        DB_SESSION.isolation_level = None
+
 
     factory_s = settings['pyramid.session_factory_secret']
     auth_s = settings['pyramid.authentication_secret']
@@ -56,6 +69,9 @@ def main(global_config, **settings):
     config.add_route('new_sub_category',
                      r'/category-{idCategory:\d+}-{nameCategory}/%s' % (
                          'new-category.html'))
+    config.add_route('thumbnail', r'/thumbnail-{idItem:\d+}-{nameItem}')
+    config.add_route('thumbnail_over',
+                     r'/thumbnail-over-{idItem:\d+}-{nameItem}')
     # Administration route
     config.add_route('home_admin', r'/admin/index.html')
 
@@ -75,5 +91,12 @@ def main(global_config, **settings):
     config.add_route('logout', r'/logout.html')
 
     config.scan()
+
+    # Thumbnail remove
+    for item in Item.all():
+        if os.path.isfile(item.thumbnail):
+            os.remove(item.thumbnail)
+        if os.path.isfile(item.thumbnailover):
+            os.remove(item.thumbnailover)
 
     return config.make_wsgi_app()
