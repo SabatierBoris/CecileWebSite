@@ -5,6 +5,8 @@ The right view part
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
 
+from sqlalchemy.exc import IntegrityError
+
 from pyramidapp.models.menu import MenuAdministration
 from ..models.right import Right
 from ..forms.right import RightForm
@@ -48,18 +50,25 @@ class RightView(object):
 
         if self.request.method == 'POST':
             error = False
+            session = Right.get_session()
             for k, right in enumerate(right_list):
-                if forms[k].name.data != right.name:
-                    if forms[k].validate():
-                        forms[k].populate_obj(right)
-                        if right.uid is None:
-                            # pylint: disable=E1101
-                            Right.get_session().add(right)
-                    else:
-                        error = True
+                try:
+                    with session.begin_nested():
+                        if forms[k].name.data != right.name or right.uid is None:
+                            if forms[k].validate():
+                                forms[k].populate_obj(right)
+                                if right.uid is None:
+                                    # pylint: disable=E1101
+                                    session.add(right)
+                            else:
+                                error = True
+                except IntegrityError as e:
+                    errors = forms[k].errors.get('name',[])
+                    errors.append("Nom déjà existant")
+                    forms[k].errors['name'] = errors
+                    error = True
             if not error:
                 # pylint: disable=E1101
-                Right.get_session().commit()
                 return HTTPFound(location=self.request.route_url('right_list'))
 
         return {'title': 'Liste des droits',

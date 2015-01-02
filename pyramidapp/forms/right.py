@@ -6,6 +6,7 @@ from .csrfform import CSRFSecureForm
 from wtforms.fields import (
     TextField,
 )
+from wtforms import validators
 
 
 class RightForm(CSRFSecureForm):
@@ -13,4 +14,5 @@ class RightForm(CSRFSecureForm):
     """
     Form for right edition
     """
-    name = TextField()
+    name = TextField(validators=[validators.required("Nom obligatoire")])
+

@@ -22,7 +22,7 @@
 						%endfor
 						<div class="${css_class} form-group">
 							<div class="input-group">
-								${forms[key].name(placeholder="Nom du droit",class_="form-control")}
+								${forms[key].name(placeholder="Nom du droit",class_="form-control",required='required')}
 								${forms[key].csrf_token()}
 								% if right.uid:
 									<a class="input-group-addon" href="${request.route_url('right_delete',uid=right.uid)}">
