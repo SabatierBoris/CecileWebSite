@@ -6,12 +6,12 @@ from pyramid.view import view_config
 from pyramid.httpexceptions import (
     HTTPFound,
 )
+from sqlalchemy.exc import IntegrityError
 
 from pyramidapp.models.menu import MenuAdministration
-from ..forms.user import UserForm
-
-from ..models.user import User, UserGroupAccess
-from ..models.group import Group
+from pyramidapp.models.user import User, UserGroupAccess
+from pyramidapp.models.group import Group
+from pyramidapp.forms.user import UserForm
 
 
 class UserView(object):
@@ -51,17 +51,24 @@ class UserView(object):
 
         if self.request.method == 'POST':
             error = False
+            session = User.get_session()
             for k, user in enumerate(user_list):
-                if forms[k].validate():
-                    forms[k].populate_obj(UserGroupAccess(user))
-                    if user.uid is None:
-                        # pylint: disable=E1101
-                        User.get_session().add(user)
-                else:
+                try:
+                    with session.begin_nested():
+                        if forms[k].validate():
+                            forms[k].populate_obj(UserGroupAccess(user))
+                            if user.uid is None:
+                                # pylint: disable=E1101
+                                session.add(user)
+                        else:
+                            error = True
+                except IntegrityError as e:
+                    errors = forms[k].errors.get('login',[])
+                    errors.append("Login déjà existant")
+                    forms[k].errors['login'] = errors
                     error = True
             if not error:
                 # pylint: disable=E1101
-                User.get_session().commit()
                 return HTTPFound(location=self.request.route_url('user_list'))
 
         return {'title': 'Liste des utilisateurs',

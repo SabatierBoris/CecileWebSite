@@ -1,6 +1,6 @@
 <%inherit file="../base.mak"/>
 			<div class="col-md-12">
-				<a class="button-with-margin btn btn-primary btn-xs" href="${request.route_url('right_list:new',new='new')}">
+				<a class="btn btn-primary btn-xs" href="${request.route_url('right_list:new',new='new')}">
 					<i class="fa fa-plus-square fa-fw"></i> Ajouter
 				</a>
 			</div>
@@ -9,17 +9,9 @@
 					% for key,right in enumerate(right_list):
 						<%
 							css_class = ""
+							if forms[key].errors:
+								css_class = "has-error"
 						%>
-						% for field,errors in forms[key].errors.items():
-							% for error in errors:
-								<%
-									css_class = "has-error"
-								%>
-								<div class="bg-danger">
-									${error}
-								</div>
-							% endfor
-						%endfor
 						<div class="${css_class} form-group">
 							<div class="input-group">
 								${forms[key].name(placeholder="Nom du droit",class_="form-control",required='required')}
@@ -34,7 +26,14 @@
 							</div>
 						</div>
 					% endfor
-					<button class="btn btn-primary btn-xs" type="submit">
+					% for field,errors in forms[key].errors.items():
+						% for error in errors:
+							<div class="bg-danger">
+								${error}
+							</div>
+						% endfor
+					%endfor
+					<button class="button-with-margin btn btn-primary btn-xs" type="submit">
 						<i class="fa fa-check-square fa-fw"></i> Enregistrer
 					</button>
 				</form>

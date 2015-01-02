@@ -11,6 +11,7 @@ from wtforms.fields import (
     FormField,
     HiddenField,
 )
+from wtforms import validators
 
 from .csrfform import CSRFSecureForm
 
@@ -30,7 +31,7 @@ class UserForm(CSRFSecureForm):
     """
     Form for user edition
     """
-    login = TextField()
+    login = TextField(validators=[validators.required("Login obligatoire")])
     password = TextField()
     firstname = TextField()
     lastname = TextField()

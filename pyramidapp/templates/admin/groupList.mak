@@ -1,6 +1,6 @@
 <%inherit file="../base.mak"/>
 			<div class="col-md-12">
-				<a class="button-with-margin btn btn-primary btn-xs" href="${request.route_url('group_list:new',new='new')}">
+				<a class="btn btn-primary btn-xs" href="${request.route_url('group_list:new',new='new')}">
 					<i class="fa fa-plus-square fa-fw"></i> Ajouter
 				</a>
 			</div>
@@ -19,9 +19,20 @@
 						<tbody>
 							% for key,group in enumerate(group_list):
 								<tr>
-									<td class="col-md-3">
+									% if 'name' in forms[key].errors:
+										<td class="has-error col-md-3">
+									% else:
+										<td class="col-md-3">
+									% endif
 										${forms[key].csrf_token()}
 										${forms[key].name(placeholder="Nom du droit",class_="form-control",required="required")}
+										% if 'name' in forms[key].errors:
+											<div class="bg-danger">
+												% for error in forms[key].errors['name']:
+													${error}
+												% endfor
+											</div>
+										% endif
 									</td>
 									% for right in forms[key].rights:
 										<td class="col-md-1">
@@ -38,13 +49,6 @@
 											<i class="fa fa-trash-o fa-fw"></i>
 										</a>
 									</td>
-									% for field,errors in forms[key].errors.items():
-										<td class="bg-danger">
-											% for error in errors:
-													${error}
-											% endfor
-										</td>
-									% endfor
 								</tr>
 							% endfor
 						</tbody>

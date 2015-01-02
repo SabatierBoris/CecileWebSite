@@ -16,7 +16,6 @@ from sqlalchemy.orm import relationship
 from . import (
     BASE,
     Dateable,
-    DB_SESSION,
 )
 from .group import Group
 
@@ -42,15 +41,18 @@ class MyPassword(types.TypeDecorator):
         pass
 
 
-class User(BASE, Dateable):
+class User(Dateable, BASE):
     # pylint: disable=R0903
     #    Too fee pyblic methods: we are juste a model
     """
     User model
     """
     __tablename__ = 'user'
-    uid = Column(Integer, primary_key=True)
-    login = Column(String, unique=True)
+#    uid = Column(Integer, primary_key=True)
+    login = Column(String,
+                   unique=True,
+                   nullable=False,
+                   info={'trim': True})
     firstname = Column(String)
     lastname = Column(String)
     email = Column(String)
@@ -63,28 +65,13 @@ class User(BASE, Dateable):
         self.password = password
 
     @classmethod
-    def all(cls):
-        """
-        Get all users
-        """
-        # pylint: disable=E1101
-        return DB_SESSION.query(User).all()
-
-    @classmethod
-    def by_uid(cls, uid):
-        """
-        Get a user with the uid
-        """
-        # pylint: disable=E1101
-        return DB_SESSION.query(User).filter(User.uid == uid).first()
-
-    @classmethod
     def by_login(cls, login):
         """
         Get a user with the login
         """
         # pylint: disable=E1101
-        return DB_SESSION.query(User).filter(User.login == login).first()
+        session = cls.get_session()
+        return session.query(User).filter(User.login == login).first()
 
     @classmethod
     def by_login_password(cls, login, password):
@@ -92,16 +79,10 @@ class User(BASE, Dateable):
         Get a user with the login and password
         """
         # pylint: disable=E1101
-        query = DB_SESSION.query(User)
+        query = cls.get_session().query(User)
         filter1 = query.filter(User.login == login)
         return filter1.filter(User.password == password).first()
 
-    @classmethod
-    def get_session(cls):
-        """
-        Get the sqlalchemy session
-        """
-        return DB_SESSION
 
 ASSOCIATION_TABLE = Table('user_group', BASE.metadata,
                           Column('user_id', Integer, ForeignKey(User.uid)),

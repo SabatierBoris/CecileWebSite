@@ -58,7 +58,7 @@ class GroupView(object):
                             forms[k].populate_obj(GroupRightAccess(group))
                             if group.uid is None:
                                 # pylint: disable=E1101
-                                Group.get_session().add(group)
+                                session.add(group)
                         else:
                             error = True
                 except IntegrityError as e:
@@ -68,7 +68,6 @@ class GroupView(object):
                     error = True
             if not error:
                 # pylint: disable=E1101
-                Group.get_session().commit()
                 return HTTPFound(location=self.request.route_url('group_list'))
 
         return {'title': 'Liste des groupes',
