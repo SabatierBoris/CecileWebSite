@@ -18,19 +18,6 @@
 						</thead>
 						<tbody>
 							% for key,group in enumerate(group_list):
-						##		<%
-						##			css_class = ["form_group","form_inline"]
-						##		%>
-						##		% for field_errors in forms[key].errors.items():
-						##			% for error in errors:
-						##				<%
-						##					css_class.append("has-error")
-						##				%>
-						##				<div class="bg-danger">
-						##					${error}
-						##				</div>
-						##			% endfor
-						##		% endfor
 								<tr>
 									<td class="col-md-3">
 										${forms[key].csrf_token()}
@@ -51,6 +38,13 @@
 											<i class="fa fa-trash-o fa-fw"></i>
 										</a>
 									</td>
+									% for field,errors in forms[key].errors.items():
+										<td class="bg-danger">
+											% for error in errors:
+													${error}
+											% endfor
+										</td>
+									% endfor
 								</tr>
 							% endfor
 						</tbody>

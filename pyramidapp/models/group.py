@@ -14,48 +14,26 @@ from sqlalchemy.orm import relationship
 from . import (
     Dateable,
     BASE,
-    DB_SESSION,
 )
 from .right import Right
 
 
-class Group(BASE, Dateable):
+class Group(Dateable, BASE):
     # pylint: disable=R0903
     #    Too fee pyblic methods: we are juste a model
     """
     Group Model
     """
     __tablename__ = 'group'
-    uid = Column(Integer, primary_key=True)
-    name = Column(String, unique=True)
+    name = Column(String,
+                  unique=True,
+                  nullable=False,
+                  info={'trim': True})
     rights = relationship('Right', secondary='group_right', backref='groups')
 
     def __init__(self, name=""):
         super(Group, self).__init__()
         self.name = name
-
-    @classmethod
-    def all(cls):
-        """
-        Get all groups
-        """
-        # pylint: disable=E1101
-        return DB_SESSION.query(Group).all()
-
-    @classmethod
-    def by_uid(cls, uid):
-        """
-        Get a group with the uid
-        """
-        # pylint: disable=E1101
-        return DB_SESSION.query(Group).filter(Group.uid == uid).first()
-
-    @classmethod
-    def get_session(cls):
-        """
-        Get the sqlalchemy session
-        """
-        return DB_SESSION
 
 
 ASSOCIATION_TABLE = Table('group_right', BASE.metadata,

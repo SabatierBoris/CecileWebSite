@@ -5,11 +5,13 @@ The group view part
 from pyramid.httpexceptions import HTTPFound
 from pyramid.view import view_config
 
-from pyramidapp.models.menu import MenuAdministration
-from ..models.group import Group, GroupRightAccess
-from ..models.right import Right
+from sqlalchemy.exc import IntegrityError
 
-from ..forms.group import GroupForm
+from pyramidapp.models.menu import MenuAdministration
+from pyramidapp.models.group import Group, GroupRightAccess
+from pyramidapp.models.right import Right
+
+from pyramidapp.forms.group import GroupForm
 
 
 class GroupView(object):
@@ -48,13 +50,21 @@ class GroupView(object):
 
         if self.request.method == 'POST':
             error = False
+            session = Group.get_session()
             for k, group in enumerate(group_list):
-                if forms[k].validate():
-                    forms[k].populate_obj(GroupRightAccess(group))
-                    if group.uid is None:
-                        # pylint: disable=E1101
-                        Group.get_session().add(group)
-                else:
+                try:
+                    with session.begin_nested():
+                        if forms[k].validate():
+                            forms[k].populate_obj(GroupRightAccess(group))
+                            if group.uid is None:
+                                # pylint: disable=E1101
+                                Group.get_session().add(group)
+                        else:
+                            error = True
+                except IntegrityError as e:
+                    errors = forms[k].errors.get('name',[])
+                    errors.append("Nom déjà existant")
+                    forms[k].errors['name'] = errors
                     error = True
             if not error:
                 # pylint: disable=E1101

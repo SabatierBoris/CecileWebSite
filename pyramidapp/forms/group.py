@@ -11,6 +11,7 @@ from wtforms.fields import (
     FieldList,
     HiddenField,
 )
+from wtforms import validators
 
 from .csrfform import CSRFSecureForm
 
@@ -30,5 +31,5 @@ class GroupForm(CSRFSecureForm):
     """
     Form for editing group
     """
-    name = TextField()
+    name = TextField(validators=[validators.required("Nom obligatoire")])
     rights = FieldList(FormField(RightAccessForm))
