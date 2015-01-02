@@ -21,7 +21,7 @@
 								<tr>
 									<td class="col-md-3">
 										${forms[key].csrf_token()}
-										${forms[key].name(placeholder="Nom du droit",class_="form-control")}
+										${forms[key].name(placeholder="Nom du droit",class_="form-control",required="required")}
 									</td>
 									% for right in forms[key].rights:
 										<td class="col-md-1">
