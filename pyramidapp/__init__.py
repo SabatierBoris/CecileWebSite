@@ -36,17 +36,19 @@ def main(global_config, **settings):
 
     engine = engine_from_config(settings, 'sqlalchemy.')
 
-
+    # pylint: disable=W0612
     @event.listens_for(engine, "connect")
     def do_connect(dbapi_connection, connection_record):
+        """
+        This function set isolation_level to None
+        if use a sqlite database for be able to
+        use nested_session
+        """
+        connection_record = connection_record
         if engine.dialect.name == "sqlite":
             dbapi_connection.isolation_level = None
 
     DB_SESSION.configure(bind=engine)
-    if engine.driver == 'pysqlite':
-        # Set isolation level to None for sqlite for be able to use nested_session
-        DB_SESSION.isolation_level = None
-
 
     factory_s = settings['pyramid.session_factory_secret']
     auth_s = settings['pyramid.authentication_secret']

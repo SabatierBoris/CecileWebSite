@@ -53,6 +53,7 @@ class GroupView(object):
             session = Group.get_session()
             for k, group in enumerate(group_list):
                 try:
+                    # pylint: disable=E1101
                     with session.begin_nested():
                         if forms[k].validate():
                             forms[k].populate_obj(GroupRightAccess(group))
@@ -61,9 +62,10 @@ class GroupView(object):
                                 session.add(group)
                         else:
                             error = True
-                except IntegrityError as e:
-                    errors = forms[k].errors.get('name',[])
-                    errors.append("Nom déjà existant")
+                except IntegrityError:
+                    msg = "Nom déjà existant"
+                    errors = forms[k].errors.get('name', [])
+                    errors.append(msg)
                     forms[k].errors['name'] = errors
                     error = True
             if not error:

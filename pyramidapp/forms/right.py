@@ -15,4 +15,3 @@ class RightForm(CSRFSecureForm):
     Form for right edition
     """
     name = TextField(validators=[validators.required("Nom obligatoire")])
-

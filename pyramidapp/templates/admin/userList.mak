@@ -105,7 +105,7 @@
 										% if user.uid:
 											<a class="btn btn-primary" href="${request.route_url('user_delete',uid=user.uid)}">
 										% else:
-											<a class="btn btn-primary" href="${request.route_url('group_list')}">
+											<a class="btn btn-primary" href="${request.route_url('user_list')}">
 										% endif
 											<i class="fa fa-trash-o fa-fw"></i>
 										</a>

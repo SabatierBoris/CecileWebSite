@@ -53,8 +53,9 @@ class RightView(object):
             session = Right.get_session()
             for k, right in enumerate(right_list):
                 try:
+                    # pylint: disable=E1101
                     with session.begin_nested():
-                        if forms[k].name.data != right.name or right.uid is None:
+                        if forms[k].name.data != right.name or not right.uid:
                             if forms[k].validate():
                                 forms[k].populate_obj(right)
                                 if right.uid is None:
@@ -62,8 +63,8 @@ class RightView(object):
                                     session.add(right)
                             else:
                                 error = True
-                except IntegrityError as e:
-                    errors = forms[k].errors.get('name',[])
+                except IntegrityError:
+                    errors = forms[k].errors.get('name', [])
                     errors.append("Nom déjà existant")
                     forms[k].errors['name'] = errors
                     error = True

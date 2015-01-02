@@ -35,5 +35,5 @@ class UserForm(CSRFSecureForm):
     password = TextField()
     firstname = TextField()
     lastname = TextField()
-    email = TextField()
+    email = TextField(validators=[validators.Email("E-mail incorrect")])
     groups = FieldList(FormField(GroupAccessForm))

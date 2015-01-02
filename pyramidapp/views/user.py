@@ -54,6 +54,7 @@ class UserView(object):
             session = User.get_session()
             for k, user in enumerate(user_list):
                 try:
+                    # pylint: disable=E1101
                     with session.begin_nested():
                         if forms[k].validate():
                             forms[k].populate_obj(UserGroupAccess(user))
@@ -62,8 +63,8 @@ class UserView(object):
                                 session.add(user)
                         else:
                             error = True
-                except IntegrityError as e:
-                    errors = forms[k].errors.get('login',[])
+                except IntegrityError:
+                    errors = forms[k].errors.get('login', [])
                     errors.append("Login déjà existant")
                     forms[k].errors['login'] = errors
                     error = True
