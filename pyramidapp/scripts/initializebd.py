@@ -8,6 +8,7 @@ import argparse
 import string
 import random
 import logging
+import os
 
 from sqlalchemy import engine_from_config
 
