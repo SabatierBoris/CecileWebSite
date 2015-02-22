@@ -34,7 +34,10 @@ def main(global_config, **settings):
     """
     global_config = global_config  # Remove W0613
 
-    engine = engine_from_config(settings, 'sqlalchemy.')
+    if 'OPENSHIFT_POSTGRESQL_DB_URL' in os.environ:
+        engine = engine_from_config(settings, 'sqlalchemy.', url=os.environ['OPENSHIFT_POSTGRESQL_DB_URL'])
+    else:
+        engine = engine_from_config(settings, 'sqlalchemy.')
 
     # pylint: disable=W0612
     @event.listens_for(engine, "connect")
