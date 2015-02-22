@@ -25,7 +25,10 @@ from ..models.right import Right
 from ..models.group import Group
 from ..models.user import User
 # pylint: disable=W0611
+from ..models.tag import Tag
+from ..models.item import Item
 from ..models.category import Category
+from ..models.picture import Picture
 # pylint: enable=W0611
 
 
@@ -86,5 +89,4 @@ def main(argv=None):
     settings = get_appsettings(config_uri)
     engine = engine_from_config(settings, 'sqlalchemy.')
     DB_SESSION.configure(bind=engine)
-    BASE.metadata.create_all(engine)
     init_admin(DB_SESSION)
