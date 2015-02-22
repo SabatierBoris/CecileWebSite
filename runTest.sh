@@ -7,8 +7,8 @@
 
 set -e
 
-pep8 pyramidapp setup.py wsgi.py
-pylint pyramidapp setup.py wsgi.py
+#pep8 pyramidapp setup.py wsgi.py
+#pylint pyramidapp setup.py wsgi.py
 nosetests
-initialize_bd pyramidapp/config/development.ini
-pserve pyramidapp/config/development.ini --reload
+#initialize_bd pyramidapp/config/development.ini
+#pserve pyramidapp/config/development.ini --reload

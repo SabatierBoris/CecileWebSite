@@ -2,8 +2,9 @@
 	% for content in contents:
 		<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
 			<% url = getContentLink(content) %>
-			<a href="${url}">
-				<img class="img-responsive " src="${content.thumbnail}" alt="${content.name}"/>
+			<a href="${url}" class="hoverimg">
+				<img class="img-responsive orignal" src="${request.route_url('thumbnail',idItem=content.uid,nameItem=content.name)}" alt="${content.name}"/>
+				<img class="img-responsive hover" src="${request.route_url('thumbnail_over',idItem=content.uid,nameItem=content.name)}" alt="${content.name}"/>
 			</a>
 		</div>
 	% endfor
@@ -24,7 +25,6 @@
 
 <%block name="css">
 	${parent.css()}
-	<link rel="stylesheet" href="${request.static_url('pyramidapp:static/css/4-col-portfolio.css')}"/>
 </%block>
 
 <%def name="getContentLink(content)">

@@ -71,6 +71,14 @@ def main(global_config, **settings):
     config.add_route('new_sub_category',
                      r'/category-{idCategory:\d+}-{nameCategory}/%s' % (
                          'new-category.html'))
+    config.add_route('edit_category',
+                     r'/category-{idCategory:\d+}-{nameCategory}/%s' % (
+                         'edit.html'))
+
+    config.add_route('new_picture',
+                     r'/category-{idCategory:\d+}-{nameCategory}/%s' % (
+                         'new-picture.html'))
+
     config.add_route('thumbnail', r'/thumbnail-{idItem:\d+}-{nameItem}')
     config.add_route('thumbnail_over',
                      r'/thumbnail-over-{idItem:\d+}-{nameItem}')
@@ -96,9 +104,9 @@ def main(global_config, **settings):
 
     # Thumbnail remove
     for item in Item.all():
-        if os.path.isfile(item.thumbnail):
+        if item.thumbnail and os.path.isfile(item.thumbnail):
             os.remove(item.thumbnail)
-        if os.path.isfile(item.thumbnailover):
+        if item.thumbnailover and os.path.isfile(item.thumbnailover):
             os.remove(item.thumbnailover)
 
     return config.make_wsgi_app()

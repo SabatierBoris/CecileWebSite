@@ -9,9 +9,15 @@ from pyramidapp.models import (
     BASE
 )
 
-from pyramidapp.models.right import Right    # pylint: disable=W0611
-from pyramidapp.models.group import Group    # pylint: disable=W0611
-from pyramidapp.models.user import User      # pylint: disable=W0611
+# pylint: disable=W0611
+from pyramidapp.models.right import Right
+from pyramidapp.models.group import Group
+from pyramidapp.models.user import User
+from pyramidapp.models.tag import Tag
+from pyramidapp.models.item import Item
+from pyramidapp.models.category import Category
+from pyramidapp.models.picture import Picture
+# pylint: enable=W0611
 
 
 def init_testing_db():

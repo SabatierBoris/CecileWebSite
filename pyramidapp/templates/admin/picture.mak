@@ -8,7 +8,7 @@
 		<div class="${css_class} form-group">
 			${form.name.label(class_="control-label col-sm-4")}
 			<div class="col-sm-8">
-				${form.name(placeholder="Nom de la categorie",class_="form-control")}
+				${form.name(placeholder="Nom de l'image",class_="form-control")}
 			</div>
 			${form.csrf_token()}
 		</div>
@@ -21,25 +21,25 @@
 		% endif
 		<%
 			css_class = ""
-			if form.errors.get('thumbnail'):
+			if form.errors.get('image'):
 				css_class = "has-error"
 		%>
 		<div class="${css_class} form-group">
-			${form.thumbnail.label(class_="control-label col-sm-4")}
+			${form.image.label(class_="control-label col-sm-4")}
 			<div class="col-sm-8">
 				<div class="input-group">
 					<span class="input-group-btn">
 						<span class="btn btn-primary btn-file">
 							Parcourir &hellip;
-							${form.thumbnail()}
+							${form.image()}
 						</span>
 					</span>
 					<input type="text" class="form-control" readonly/>
 				</div>
 			</div>
 		</div>
-		% if form.errors.get('thumbnail'):
-				% for error in form.errors['thumbnail']:
+		% if form.errors.get('image'):
+				% for error in form.errors['image']:
 					<div class="bg-danger col-md-offset-4 col-sm-8">
 						${error}
 					</div>

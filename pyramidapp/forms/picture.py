@@ -1,6 +1,6 @@
 # vim: set fileencoding=utf-8 :
 """
-Category forms module
+Picture forms module
 """
 from .csrfform import CSRFSecureForm
 from wtforms.fields import (
@@ -12,10 +12,11 @@ from wtforms.validators import Required
 from pyramidapp.forms.validators import ImageFileRequired
 
 
-class CategoryForm(CSRFSecureForm):
+class PictureForm(CSRFSecureForm):
     # pylint: disable=R0903
     """
-    Form for category edition
+    Form for picture edition
     """
     name = TextField(u'Nom', [Required()])
-    thumbnail = FileField(u'Miniature', [ImageFileRequired()])
+    image = FileField(u'Image', [ImageFileRequired()])
+

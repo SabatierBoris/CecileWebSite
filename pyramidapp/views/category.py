@@ -1,9 +1,11 @@
 # vim: set fileencoding=utf-8 :
 """
-The right view part
+The category view part
 """
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+
+from sqlalchemy.exc import IntegrityError
 
 from pyramidapp.models.menu import MenuAdministration
 from pyramidapp.models.category import Category
@@ -67,18 +69,72 @@ class CategoryView(object):
 
         form = CategoryForm(self.request.POST, request=self.request)
         if self.request.method == 'POST' and form.validate():
-            category = Category()
-            category.parent = parent
-            # pylint: disable=E1101
-            form.populate_obj(category)
-            Category.get_session().add(category)
-            Category.get_session().commit()
-            url = self.request.route_url('view_category',
-                                         idCategory=category.uid,
-                                         nameCategory=category.name)
-            return HTTPFound(url)
+            session = Category.get_session()
+            try:
+                # pylint: disable=E1101
+                with session.begin_nested():
+                    category = Category()
+                    category.parent = parent
+                    # pylint: disable=E1101
+                    form.populate_obj(category)
+                    session.add(category)
+                    session.flush()
+                    url = self.request.route_url('view_category',
+                                                 idCategory=category.uid,
+                                                 nameCategory=category.name)
+                    return HTTPFound(url)
+            except IntegrityError:
+                errors = form.errors.get('name', [])
+                errors.append("Nom déjà existant")
+                form.errors['name'] = errors
 
         return {'title': 'Nouvelle categorie',
+                'idCategory': idcategory,
+                'nameCategory': namecategory,
+                'form': form}
+
+
+    @MenuAdministration(order=2,
+                        display='Modifier categorie',
+                        route_name=None,
+                        route_name_category='edit_category')
+    @view_config(route_name='edit_category',
+                 renderer='admin/category.mak',
+                 permission='write')
+    def edit_category(self):
+        """
+        Display the content of a category
+        """
+        idcategory = int(self.request.matchdict.get('idCategory', -1))
+        namecategory = self.request.matchdict.get('nameCategory', None)
+        category = Category.by_uid(idcategory)
+        if category is None:
+            return HTTPNotFound()
+
+        form = CategoryForm(self.request.POST, category, request=self.request)
+        if self.request.method == 'POST' and form.validate():
+            session = Category.get_session()
+            try:
+                # pylint: disable=E1101
+                with session.begin_nested():
+                    if form.name.data != category.name:
+                        category.updateName(form.name.data)
+                    # category = Category()
+                    # category.parent = parent
+                    # pylint: disable=E1101
+                    #form.populate_obj(category)
+                    #session.add(category)
+                    #session.flush()
+                    url = self.request.route_url('view_category',
+                                                 idCategory=category.uid,
+                                                 nameCategory=category.name)
+                    return HTTPFound(url)
+            except IntegrityError:
+                errors = form.errors.get('name', [])
+                errors.append("Nom déjà existant")
+                form.errors['name'] = errors
+
+        return {'title': 'Modifier la categorie',
                 'idCategory': idcategory,
                 'nameCategory': namecategory,
                 'form': form}

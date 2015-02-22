@@ -16,6 +16,7 @@ REQUIRES = [
     'pyramid_debugtoolbar',
     # BDD
     'sqlalchemy',
+    'alembic',
     # Template
     'pyramid_mako',
     # Form
@@ -24,6 +25,8 @@ REQUIRES = [
     'paginate',
     # UnitTest
     'WebTest',
+    # Image manipulation
+    'Pillow',
 ]
 
 setup(

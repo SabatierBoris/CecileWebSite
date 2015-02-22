@@ -2,49 +2,54 @@
 """
 Category Model module
 """
+import os
 
 from sqlalchemy import Column
 from sqlalchemy import ForeignKey
-from sqlalchemy import UniqueConstraint
-from sqlalchemy import Integer
-from sqlalchemy import String
+from sqlalchemy import Integer, String
+from sqlalchemy import event
+
+import imghdr
 
 from sqlalchemy.orm import backref, relationship
 
-from . import (
-    DB_SESSION,
-    BASE,
-    Dateable,
-)
+from pyramidapp.models.item import Item
+from pyramidapp.models.image import generate_thumbnail, generate_thumbnail_over
 
 
-class Category(BASE, Dateable):
+class Category(Item):
     # pylint: disable=R0903
     #    Too fee pyblic methods: we are juste a model
     """
     Category Model
     """
     __tablename__ = 'category'
-    uid = Column(Integer, primary_key=True)
-    parent_id = Column(Integer,
-                       ForeignKey('category.uid'))
-    name = Column(String,
-                  nullable=False,
-                  info={'trim': True})
-    parent = relationship("Category", remote_side=[uid])
-    children = relationship("Category",
-                            backref=backref('category', remote_side=[uid]))
-    __table_args__ = (UniqueConstraint('name',
-                                       'parent_id',
-                                       name='cat_by_parent'),)
+    uid = Column(Integer,
+                 ForeignKey('item.uid',
+                            use_alter=True,
+                            name='fk_category_item'),
+                 primary_key=True)
+    original_image_name = Column(String)
+    __mapper_args__ = {
+        'inherit_condition': (uid == Item.uid),
+        'polymorphic_identity': 'category'
+    }
+    children = relationship("Item",
+                            backref=backref('category'),
+                            foreign_keys=[Item.parent_id])
 
-    @property
-    def thumbnail(self):
-        """
-        Get the thumbnail of the category
-        """
-        base = 'http://placehold.it/2970x2100/090909/777777&text='
-        return "%s%s" % (base, self.name)
+    def updateName(self, value):
+        thumb = self.thumbnail
+        thumbover = self.thumbnailover
+        original = self.original_image_name
+        _, ext = os.path.splitext(original)
+        for image in [thumb, thumbover]:
+            if os.path.isfile(image):
+                os.remove(image)
+        self.name = value
+        newOriginal = self.getOriginalImageName(ext)
+        os.rename(original, newOriginal)
+        self.original_image_name = newOriginal
 
     def get_content(self):
         """
@@ -53,44 +58,64 @@ class Category(BASE, Dateable):
         for child in self.children:
             yield child
 
-    def is_a_child_of(self, parent):
+    @property
+    def thumbnail(self):
         """
-        Know if self is a child (or sub child) of parent
+        Get the thumbnail of the item
         """
-        if self.parent is None:
-            return False
-        if self.parent == parent:
-            return True
-        return self.parent.is_a_child_of(parent)
+        thumbnail = os.path.join(self.get_dir(), "thumbnail_%s.png"%(os.path.basename(self.original_image_name)))
+        if not os.path.isfile(thumbnail):
+            generate_thumbnail(self.original_image_name, thumbnail)
+        return thumbnail
 
-    @classmethod
-    def all(cls):
+    @property
+    def thumbnailover(self):
         """
-        Get all category
+        Get the thumbnailOver of the item
         """
-        # pylint: disable=E1101
-        return DB_SESSION.query(Category).all()
+        thumbnail = os.path.join(self.get_dir(), "thumbnail_over_%s.png"%(os.path.basename(self.original_image_name)))
+        if not os.path.isfile(thumbnail):
+            generate_thumbnail_over(self.original_image_name,
+                                    thumbnail,
+                                    self.name.upper())
+        return thumbnail
 
-    @classmethod
-    def by_uid(cls, uid):
+    @thumbnail.setter
+    def thumbnail(self, val):
         """
-        Get a category with the uid
+        Set the thumbnail of the item
         """
-        # pylint: disable=E1101
-        return DB_SESSION.query(Category).filter(Category.uid == uid).first()
+        val.file.seek(0)
+        ext = imghdr.what('unused', val.file.read())
+        val.file.seek(0)
+        path = self.getOriginalImageName(ext)
+        self.original_image_name = path
+        output_file = open(path, 'wb')
 
-    @classmethod
-    def get_session(cls):
-        """
-        Get the sqlalchemy session
-        """
-        return DB_SESSION
+        while not val.file.closed:
+            data = val.file.read(2 << 16)
+            if not data:
+                val.file.close()
+            output_file.write(data)
+        output_file.close()
 
-    @classmethod
-    def get_with_direct_parent(cls, parent):
-        """
-        Get all category with a direct parent
-        """
-        # pylint: disable=E1101
-        cat = DB_SESSION.query(Category)
-        return cat.filter(Category.parent == parent).all()
+    def getOriginalImageName(self, ext):
+        return os.path.join(self.get_dir(), "Category_original_%s.%s" % (self.name,ext))
+
+
+@event.listens_for(Category.name, 'set')
+def create_category_dir(target, value, oldvalue, initiator):
+    """
+    Create of move the category directory
+    """
+    initiator = initiator
+    base = target.get_base()
+    new_dir = os.path.join(base, value)
+    if not oldvalue:
+        old_dir = os.path.join(base, oldvalue)
+        os.renames(old_dir, new_dir)
+    else:
+        try:
+            os.makedirs(new_dir)
+        except os.error:
+            pass
