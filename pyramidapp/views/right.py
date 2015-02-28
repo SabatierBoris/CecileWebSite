@@ -63,6 +63,7 @@ class RightView(object):
                                     session.add(right)
                             else:
                                 error = True
+                    session.commit()
                 except IntegrityError:
                     errors = forms[k].errors.get('name', [])
                     errors.append("Nom déjà existant")

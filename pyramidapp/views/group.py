@@ -62,6 +62,7 @@ class GroupView(object):
                                 session.add(group)
                         else:
                             error = True
+                    session.commit()
                 except IntegrityError:
                     msg = "Nom déjà existant"
                     errors = forms[k].errors.get('name', [])

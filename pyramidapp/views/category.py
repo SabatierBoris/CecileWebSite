@@ -79,10 +79,11 @@ class CategoryView(object):
                     form.populate_obj(category)
                     session.add(category)
                     session.flush()
-                    url = self.request.route_url('view_category',
-                                                 idCategory=category.uid,
-                                                 nameCategory=category.name)
-                    return HTTPFound(url)
+                session.commit()
+                url = self.request.route_url('view_category',
+                                             idCategory=category.uid,
+                                             nameCategory=category.name)
+                return HTTPFound(url)
             except IntegrityError:
                 errors = form.errors.get('name', [])
                 errors.append("Nom déjà existant")
@@ -125,10 +126,11 @@ class CategoryView(object):
                     #form.populate_obj(category)
                     #session.add(category)
                     #session.flush()
-                    url = self.request.route_url('view_category',
-                                                 idCategory=category.uid,
-                                                 nameCategory=category.name)
-                    return HTTPFound(url)
+                session.commit()
+                url = self.request.route_url('view_category',
+                                             idCategory=category.uid,
+                                             nameCategory=category.name)
+                return HTTPFound(url)
             except IntegrityError:
                 errors = form.errors.get('name', [])
                 errors.append("Nom déjà existant")

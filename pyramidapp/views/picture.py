@@ -51,10 +51,11 @@ class PictureView(object):
                     form.populate_obj(picture)
                     session.add(picture)
                     session.flush()
-                    url = self.request.route_url('view_category',
-                                                 idCategory=parent.uid,
-                                                 nameCategory=parent.name)
-                    return HTTPFound(url)
+                session.commit()
+                url = self.request.route_url('view_category',
+                                             idCategory=parent.uid,
+                                             nameCategory=parent.name)
+                return HTTPFound(url)
             except IntegrityError:
                 errors = form.errors.get('name', [])
                 errors.append("Nom déjà existant")

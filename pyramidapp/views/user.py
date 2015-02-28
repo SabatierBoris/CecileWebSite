@@ -63,6 +63,7 @@ class UserView(object):
                                 session.add(user)
                         else:
                             error = True
+                    session.commit()
                 except IntegrityError:
                     errors = forms[k].errors.get('login', [])
                     errors.append("Login déjà existant")
