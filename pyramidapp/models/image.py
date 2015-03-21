@@ -2,7 +2,12 @@
 """
 Image manipulation module
 """
+import os
+
+from pyramid.threadlocal import get_current_registry
+
 from PIL import Image, ImageFont, ImageFilter, ImageDraw, ImageChops
+
 from itertools import product
 
 
@@ -91,23 +96,30 @@ def generate_thumbnail_over(original, target, text):
     """
     Generate the thumbnail in grayscale with the text over
     """
+    settings = get_current_registry().settings
+    base = None
+    if settings['app.dir'] in os.environ:
+        base = os.environ[settings['app.dir']]
+    else:
+        base = settings['app.dir']
+    police = "%s%s"%(base,THUMBNAIL_POLICE)
     image = Image.open(original)
     image.thumbnail(THUMBNAIL_SIZE, Image.ANTIALIAS)
     thumbnail = Image.new('RGBA', THUMBNAIL_SIZE, THUMBNAIL_BACKGROUND)
     police_size = calcul_full_size_text_police(image.size,
                                                text,
-                                               THUMBNAIL_POLICE)
+                                               police)
 
     image1 = image.convert('L')
     image1 = image1.filter(ImageFilter.GaussianBlur(radius=THUMBNAIL_BLUR))
     image1 = add_centered_blured_shadow(image1,
                                         text,
-                                        (THUMBNAIL_POLICE, police_size),
+                                        (police, police_size),
                                         THUMBNAIL_SHADOW_COLOR,
                                         THUMBNAIL_SHADOW_INFO)
     image1 = add_centered_text(image1,
                                text,
-                               THUMBNAIL_POLICE,
+                               police,
                                police_size,
                                THUMBNAIL_TEXT_COLOR)
 

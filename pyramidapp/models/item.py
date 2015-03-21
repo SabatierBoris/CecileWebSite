@@ -78,10 +78,10 @@ class Item(Dateable, BASE):
         """
         settings = get_current_registry().settings
         base = None
-        if 'content.dir' in settings:
+        if settings['content.dir'] in os.environ:
+            base = os.environ[settings['content.dir']]
+        else:
             base = settings['content.dir']
-        if 'content.dir_env' in settings:
-            base = os.environ[settings['content.dir_env']]
         if not base:
             raise Exception("content settings not found")
         if self.parent:
