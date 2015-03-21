@@ -34,8 +34,8 @@ def main(global_config, **settings):
     """
     global_config = global_config  # Remove W0613
 
-    if 'OPENSHIFT_POSTGRESQL_DB_URL' in os.environ:
-        engine = engine_from_config(settings, 'sqlalchemy.', url=os.environ['OPENSHIFT_POSTGRESQL_DB_URL'])
+    if 'sqlalchemy.url_env' in settings:
+        engine = engine_from_config(settings, 'sqlalchemy.', url=os.environ[settings['sqlalchemy.url_env']])
     else:
         engine = engine_from_config(settings, 'sqlalchemy.')
 
@@ -104,6 +104,8 @@ def main(global_config, **settings):
     config.add_route('logout', r'/logout.html')
 
     config.scan()
+
+    config.begin()
 
     # Thumbnail remove
     for item in Item.all():

@@ -4,6 +4,8 @@ Item Model module
 """
 import os
 
+from pyramid.threadlocal import get_current_registry
+
 from sqlalchemy import Column
 from sqlalchemy import ForeignKey
 from sqlalchemy import UniqueConstraint
@@ -74,7 +76,14 @@ class Item(Dateable, BASE):
         """
         Get the base directory of the category
         """
-        base = "content"
+        settings = get_current_registry().settings
+        base = None
+        if 'content.dir' in settings:
+            base = settings['content.dir']
+        if 'content.dir_env' in settings:
+            base = os.environ[settings['content.dir_env']]
+        if not base:
+            raise Exception("content settings not found")
         if self.parent:
             base = self.parent.get_dir()
         return base
