@@ -10,7 +10,7 @@ install:
 script:
     #- pep8 pyramidapp setup.py wsgi.py
     #- pylint pyramidapp setup.py wsgi.py
-- nosetests
+    #- nosetests
 deploy:
   provider: openshift
   user: sabatier.boris@gmail.com
