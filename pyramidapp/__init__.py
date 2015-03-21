@@ -34,10 +34,8 @@ def main(global_config, **settings):
     """
     global_config = global_config  # Remove W0613
 
-    if 'sqlalchemy.url_env' in settings:
-        print("ENV VAR : ",settings['sqlalchemy.url_env'])
-        print("VALUE : ",os.environ[settings['sqlalchemy.url_env']])
-        engine = engine_from_config(settings, 'sqlalchemy.', url=os.environ[settings['sqlalchemy.url_env']])
+    if settings['sqlalchemy.url'] in os.environ:
+        engine = engine_from_config(settings, 'sqlalchemy.', url=os.environ[settings['sqlalchemy.url']])
     else:
         engine = engine_from_config(settings, 'sqlalchemy.')
 
