@@ -7,10 +7,10 @@ python:
 install:
 - pip install .
 - pip install pep8 pylint nose --upgrade
-script:
-    #- pep8 pyramidapp setup.py wsgi.py
-    #- pylint pyramidapp setup.py wsgi.py
-    #- nosetests
+#script:
+#- pep8 pyramidapp setup.py wsgi.py
+#- pylint pyramidapp setup.py wsgi.py
+#- nosetests
 deploy:
   provider: openshift
   user: sabatier.boris@gmail.com
