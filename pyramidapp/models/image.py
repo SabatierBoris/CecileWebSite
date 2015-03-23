@@ -92,7 +92,7 @@ def generate_thumbnail(original, target):
     thumbnail.save(target)
 
 
-def generate_thumbnail_over(original, target, text):
+def generate_thumbnail_over(original, target, text, blur=True):
     """
     Generate the thumbnail in grayscale with the text over
     """
@@ -106,22 +106,24 @@ def generate_thumbnail_over(original, target, text):
     image = Image.open(original)
     image.thumbnail(THUMBNAIL_SIZE, Image.ANTIALIAS)
     thumbnail = Image.new('RGBA', THUMBNAIL_SIZE, THUMBNAIL_BACKGROUND)
-    police_size = calcul_full_size_text_police(image.size,
-                                               text,
-                                               police)
 
     image1 = image.convert('L')
-    image1 = image1.filter(ImageFilter.GaussianBlur(radius=THUMBNAIL_BLUR))
-    image1 = add_centered_blured_shadow(image1,
-                                        text,
-                                        (police, police_size),
-                                        THUMBNAIL_SHADOW_COLOR,
-                                        THUMBNAIL_SHADOW_INFO)
-    image1 = add_centered_text(image1,
-                               text,
-                               police,
-                               police_size,
-                               THUMBNAIL_TEXT_COLOR)
+    if blur:
+        image1 = image1.filter(ImageFilter.GaussianBlur(radius=THUMBNAIL_BLUR))
+    if text:
+        police_size = calcul_full_size_text_police(image.size,
+                                                   text,
+                                                   police)
+        image1 = add_centered_blured_shadow(image1,
+                                            text,
+                                            (police, police_size),
+                                            THUMBNAIL_SHADOW_COLOR,
+                                            THUMBNAIL_SHADOW_INFO)
+        image1 = add_centered_text(image1,
+                                   text,
+                                   police,
+                                   police_size,
+                                   THUMBNAIL_TEXT_COLOR)
 
     offset = (int((thumbnail.size[0]-image1.size[0])/2),
               int((thumbnail.size[1]-image1.size[1])/2))

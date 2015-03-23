@@ -52,7 +52,8 @@ class Picture(Item, TaggableItem, BASE):
         if not os.path.isfile(thumbnail):
             generate_thumbnail_over(self.original_image_name,
                                     thumbnail,
-                                    self.name.upper())
+                                    "",
+                                    blur=False)
         return thumbnail
 
     @property
