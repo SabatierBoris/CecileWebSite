@@ -3,3 +3,6 @@ venv
 *.egg-info
 *.sqlite
 *.swp
+build
+content
+dist
