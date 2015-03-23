@@ -17,6 +17,7 @@ from . import (
 
 from pyramidapp.models.item import Item
 from pyramidapp.models.tag import TaggableItem
+from pyramidapp.models.image import generate_thumbnail, generate_thumbnail_over
 
 
 class Picture(Item, TaggableItem, BASE):
@@ -37,16 +38,22 @@ class Picture(Item, TaggableItem, BASE):
         """
         Get the thumbnail of the item
         """
-        self = self
-        # raise NotImplementedError("Thumbnail method will be implemented")
+        thumbnail = os.path.join(self.get_dir(), "thumbnail_%s.png"%(os.path.basename(self.original_image_name)))
+        if not os.path.isfile(thumbnail):
+            generate_thumbnail(self.original_image_name, thumbnail)
+        return thumbnail
 
     @property
     def thumbnailover(self):
         """
         Get the thumbnailOver of the item
         """
-        self = self
-        # raise NotImplementedError("ThumbnailOver method will be implemented")
+        thumbnail = os.path.join(self.get_dir(), "thumbnail_over_%s.png"%(os.path.basename(self.original_image_name)))
+        if not os.path.isfile(thumbnail):
+            generate_thumbnail_over(self.original_image_name,
+                                    thumbnail,
+                                    self.name.upper())
+        return thumbnail
 
     @property
     def image(self):
@@ -73,3 +80,9 @@ class Picture(Item, TaggableItem, BASE):
                 val.file.close()
             output_file.write(data)
         output_file.close()
+
+    def get_dir(self):
+        """
+        Get the category directory
+        """
+        return self.get_base()
