@@ -78,11 +78,15 @@ def main(global_config, **settings):
                      r'/category-{idCategory:\d+}-{nameCategory}/%s' % (
                          'edit.html'))
 
+    config.add_route('view_picture',
+                     r'/picture-{idPicture:\d+}-{namePicture}/%s' % (
+                         'index.html'))
     config.add_route('new_picture',
                      r'/category-{idCategory:\d+}-{nameCategory}/%s' % (
                          'new-picture.html'))
 
     config.add_route('thumbnail', r'/thumbnail-{idItem:\d+}-{nameItem}')
+    config.add_route('original_picture', r'/picture-{idPicture:\d+}-{namePicture}')
     config.add_route('thumbnail_over',
                      r'/thumbnail-over-{idItem:\d+}-{nameItem}')
     # Administration route

@@ -4,6 +4,7 @@ The picture view part
 """
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound, HTTPNotFound
+from pyramid.response import FileResponse
 
 from sqlalchemy.exc import IntegrityError
 
@@ -19,6 +20,38 @@ class PictureView(object):
     """
     def __init__(self, request):
         self.request = request
+
+    @view_config(route_name='original_picture')
+    def view_original_picture(self):
+        """
+        Display the original picutre
+        """
+        idpicture = int(self.request.matchdict.get('idPicture', -1))
+        namepicture = self.request.matchdict.get('namePicture', '')
+
+        picture = Picture.by_uid(idpicture)
+
+        if picture is None or picture.name != namepicture:
+            return HTTPNotFound("Picture %d-%s not found", idpicture, namepicture)
+
+        response = FileResponse(picture.original_image_name,
+                                request=self.request,
+                                content_type='image/jpeg')
+        return response
+
+    @view_config(route_name='view_picture',
+                 renderer='picture.mak')
+    def view_picture(self):
+        """
+        Display a picture
+        """
+        idpicture = int(self.request.matchdict.get('idPicture', -1))
+        namepicture = self.request.matchdict.get('namePicture', None)
+        picture = Picture.by_uid(idpicture)
+        if picture is None or picture.name != namepicture:
+            return HTTPNotFound()
+
+        return {'picture': picture}
 
 
     @MenuAdministration(order=3,

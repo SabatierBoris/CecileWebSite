@@ -53,6 +53,12 @@ class Item(Dateable, BASE):
         """
         raise NotImplementedError("ThumbnailOver method should be implemented")
 
+    def view_url(self,request):
+        """
+        Get the view url of the item
+        """
+        raise NotImplementedError("view_url method should be implemented")
+
     def is_a_child_of(self, parent):
         """
         Know if self is a child (or sub child) of parent
@@ -62,6 +68,30 @@ class Item(Dateable, BASE):
         if self.parent == parent:
             return True
         return self.parent.is_a_child_of(parent)
+
+    @property
+    def previous(self):
+        """
+        Get the previous item
+        """
+        return (self.get_session()
+                    .query(Item)
+                    .filter(Item.parent_id == self.parent_id)
+                    .filter(Item.uid < self.uid)
+                    .order_by(Item.uid.desc())
+                    .first())
+
+    @property
+    def next(self):
+        """
+        Get the next item
+        """
+        return (self.get_session()
+                    .query(Item)
+                    .filter(Item.parent_id == self.parent_id)
+                    .filter(Item.uid > self.uid)
+                    .order_by(Item.uid)
+                    .first())
 
     @classmethod
     def get_with_direct_parent(cls, parent):

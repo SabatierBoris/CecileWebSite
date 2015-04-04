@@ -1,8 +1,7 @@
 <%inherit file="base.mak"/>
 	% for content in contents:
 		<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
-			<% url = getContentLink(content) %>
-			<a href="${url}" class="hoverimg">
+			<a href="${content.view_url(request)}" class="hoverimg">
 				<img class="img-responsive orignal" src="${request.route_url('thumbnail',idItem=content.uid,nameItem=content.name)}" alt="${content.name}"/>
 				<img class="img-responsive hover" src="${request.route_url('thumbnail_over',idItem=content.uid,nameItem=content.name)}" alt="${content.name}"/>
 			</a>
@@ -26,13 +25,3 @@
 <%block name="css">
 	${parent.css()}
 </%block>
-
-<%def name="getContentLink(content)">
-	% if content.__class__.__name__ == 'Category':
-		<% return getCategoryLink(content) %>
-	% endif
-</%def>
-
-<%def name="getCategoryLink(category)">
-	<% return request.route_url('view_category',idCategory=category.uid,nameCategory=category.name) %>
-</%def>

@@ -56,6 +56,12 @@ class Picture(Item, TaggableItem, BASE):
                                     blur=False)
         return thumbnail
 
+    def view_url(self,request):
+        """
+        Get the view url of the item
+        """
+        return request.route_url('view_picture',idPicture=self.uid,namePicture=self.name)
+
     @property
     def image(self):
         """

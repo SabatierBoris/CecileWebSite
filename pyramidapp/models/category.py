@@ -80,6 +80,12 @@ class Category(Item):
                                     self.name.upper())
         return thumbnail
 
+    def view_url(self,request):
+        """
+        Get the view url of the item
+        """
+        return request.route_url('view_category',idCategory=self.uid,nameCategory=self.name)
+
     @thumbnail.setter
     def thumbnail(self, val):
         """

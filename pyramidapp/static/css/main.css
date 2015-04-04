@@ -1,3 +1,64 @@
+html {
+	min-height:100%;
+	height:100%;
+}
+body {
+	min-height:100%;
+	height:100%;
+}
+
+#page-content-wrapper {
+	min-height:100%;
+	height:100%;
+}
+
+.picture {
+	min-height:100%;
+	height:100%;
+}
+
+.image {
+	display:block;
+	width:100%;
+	min-height:100%;
+	height:100%;
+	position:relative;
+}
+
+.picture .image img {
+	height:auto;
+	max-height:100%;
+	max-width:100%;
+}
+
+.img-button {
+	display:block;
+	font-size:35vh;
+	width: 44vw;
+	height: 100%;
+	top:0;
+	position:absolute;
+	z-index: 9;
+	opacity:0.2;
+	transition: opacity .5s;
+}
+
+.img-button:hover {
+	opacity:.9;
+}
+
+.img-button a {
+	opacity:.9;
+	display:block;
+	text-decoration:none;
+}
+
+.next {
+	text-align:right;
+	bottom:0;
+	right:0;
+}
+
 /*.page-header {
 	margin: 0px;
 	border: 0px;
