@@ -125,3 +125,11 @@ class Item(Dateable, BASE):
         """
         base = self.get_base()
         return os.path.join(base, self.name)
+
+    def delete(self):
+        """
+        Delete a item
+        """
+        session = self.get_session()
+        session.delete(self)
+        session.commit()

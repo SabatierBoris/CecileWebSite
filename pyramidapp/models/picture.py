@@ -93,3 +93,13 @@ class Picture(Item, TaggableItem, BASE):
         Get the category directory
         """
         return self.get_base()
+
+    def delete(self):
+        """
+        Delete picture
+        """
+        os.rm(self.thumbnail)
+        os.rm(self.thumbnailover)
+        os.rm(self.original_image_name)
+
+        super(Picture,self).delete()

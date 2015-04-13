@@ -3,6 +3,7 @@
 Category Model module
 """
 import os
+import shutil
 
 from sqlalchemy import Column
 from sqlalchemy import ForeignKey
@@ -107,6 +108,14 @@ class Category(Item):
 
     def getOriginalImageName(self, ext):
         return os.path.join(self.get_dir(), "Category_original_%s.%s" % (self.name,ext))
+
+    def delete(self):
+        for child in self.children:
+            child.delete()
+
+        shutil.rmtree(self.get_dir())
+
+        super(Category,self).delete()
 
 
 @event.listens_for(Category.name, 'set')

@@ -55,7 +55,7 @@ class PictureView(object):
                 'idCategory': picture.parent.uid}
 
 
-    @MenuAdministration(order=3,
+    @MenuAdministration(order=4,
                         display='Nouvelle image',
                         route_name=None,
                         route_name_category='new_picture')
@@ -99,3 +99,30 @@ class PictureView(object):
                 'idCategory': idcategory,
                 'nameCategory': namecategory,
                 'form': form}
+#
+#    @MenuAdministration(order=5,
+#                        display='Supprimer image',
+#                        route_name=None,
+#                        route_name_category='delete_picture')
+#    @view_config(route_name='delete_picture', permission='write')
+#    def delete_picture(self):
+#        """
+#        Remove a picture
+#        """
+#        idpicture = int(self.request.matchdict.get('idPicture', -1))
+#        namepicture = self.request.matchdict.get('namePicture', None)
+#        picture = Picture.by_uid(idpicture)
+#        if picture is None or picture.name != namepicture:
+#            return HTTPNotFound()
+#
+#        if picture.parent != None:
+#            url = self.request.route_url('view_category',
+#                                         idCategory=picture.parent.uid,
+#                                         nameCategory=picture.parent.name)
+#        else:
+#            url = self.request.route_url('home')
+#
+#        picture.delete()
+#
+#        return HTTPFound(url)
+#

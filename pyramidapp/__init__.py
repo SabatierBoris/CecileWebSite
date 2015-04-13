@@ -77,10 +77,16 @@ def main(global_config, **settings):
     config.add_route('edit_category',
                      r'/category-{idCategory:\d+}-{nameCategory}/%s' % (
                          'edit.html'))
+    config.add_route('delete_category',
+                     r'/category-{idCategory:\d+}-{nameCategory}/%s' % (
+                         'delete.html'))
 
     config.add_route('view_picture',
                      r'/picture-{idPicture:\d+}-{namePicture}/%s' % (
                          'index.html'))
+#    config.add_route('delete_picture',
+#                     r'/picture-{idPicture:\d+}-{namePicture}/%s' % (
+#                         'delete.html'))
     config.add_route('new_picture',
                      r'/category-{idCategory:\d+}-{nameCategory}/%s' % (
                          'new-picture.html'))

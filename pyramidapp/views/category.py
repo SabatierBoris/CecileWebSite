@@ -140,3 +140,29 @@ class CategoryView(object):
                 'idCategory': idcategory,
                 'nameCategory': namecategory,
                 'form': form}
+
+    @MenuAdministration(order=3,
+                        display='Supprimer categorie',
+                        route_name=None,
+                        route_name_category='delete_category')
+    @view_config(route_name='delete_category', permission='write')
+    def delete_category(self):
+        """
+        Remove a category
+        """
+        idcategory = int(self.request.matchdict.get('idCategory', -1))
+        namecategory = self.request.matchdict.get('nameCategory', None)
+
+        category = Category.by_uid(idcategory)
+        if category.parent != None:
+            url = self.request.route_url('view_category',
+                                         idCategory=category.parent.uid,
+                                         nameCategory=category.parent.name)
+        else:
+            url = self.request.route_url('home')
+        if category is None:
+            return HTTPNotFound()
+
+        category.delete()
+
+        return HTTPFound(url)
