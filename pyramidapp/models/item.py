@@ -98,9 +98,10 @@ class Item(Dateable, BASE):
         """
         Get all item with a direct parent
         """
+        from pyramidapp.models.category import Category
         # pylint: disable=E1101
-        cat = cls.get_session().query(Item)
-        return cat.filter(Item.parent == parent).all()
+        cat = cls.get_session().query(Category)
+        return cat.filter(Category.parent == parent).all()
 
     def get_base(self):
         """

@@ -51,7 +51,8 @@ class PictureView(object):
         if picture is None or picture.name != namepicture:
             return HTTPNotFound()
 
-        return {'picture': picture}
+        return {'picture': picture,
+                'idCategory': picture.parent.uid}
 
 
     @MenuAdministration(order=3,
