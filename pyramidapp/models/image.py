@@ -89,7 +89,7 @@ def generate_thumbnail(original, target):
     offset = (int((thumbnail.size[0]-image.size[0])/2),
               int((thumbnail.size[1]-image.size[1])/2))
     thumbnail.paste(image, offset)
-    thumbnail.save(target)
+    thumbnail.save(target, "JPEG", quality=80, optimize=True, progressive=True)
 
 
 def generate_thumbnail_over(original, target, text, blur=True):
@@ -128,4 +128,4 @@ def generate_thumbnail_over(original, target, text, blur=True):
     offset = (int((thumbnail.size[0]-image1.size[0])/2),
               int((thumbnail.size[1]-image1.size[1])/2))
     thumbnail.paste(image1, offset)
-    thumbnail.save(target)
+    thumbnail.save(target, "JPEG", quality=80, optimize=True, progressive=True)
