@@ -69,30 +69,30 @@ def main(global_config, **settings):
     config.add_route('home', '/')
 
     config.add_route('view_category',
-                     r'/category-{idCategory:\d+}-{nameCategory}/index.html')
+                     r'/category-{idItem:\d+}-{nameItem}/index.html')
     config.add_route('new_category', r'/new-category.html')
     config.add_route('new_sub_category',
-                     r'/category-{idCategory:\d+}-{nameCategory}/%s' % (
+                     r'/category-{idItem:\d+}-{nameItem}/%s' % (
                          'new-category.html'))
     config.add_route('edit_category',
-                     r'/category-{idCategory:\d+}-{nameCategory}/%s' % (
+                     r'/category-{idItem:\d+}-{nameItem}/%s' % (
                          'edit.html'))
     config.add_route('delete_category',
-                     r'/category-{idCategory:\d+}-{nameCategory}/%s' % (
+                     r'/category-{idItem:\d+}-{nameItem}/%s' % (
                          'delete.html'))
 
     config.add_route('view_picture',
-                     r'/picture-{idPicture:\d+}-{namePicture}/%s' % (
+                     r'/picture-{idItem:\d+}-{nameItem}/%s' % (
                          'index.html'))
-#    config.add_route('delete_picture',
-#                     r'/picture-{idPicture:\d+}-{namePicture}/%s' % (
-#                         'delete.html'))
+    config.add_route('delete_picture',
+                     r'/picture-{idItem:\d+}-{nameItem}/%s' % (
+                         'delete.html'))
     config.add_route('new_picture',
-                     r'/category-{idCategory:\d+}-{nameCategory}/%s' % (
+                     r'/category-{idItem:\d+}-{nameItem}/%s' % (
                          'new-picture.html'))
 
     config.add_route('thumbnail', r'/thumbnail-{idItem:\d+}-{nameItem}')
-    config.add_route('original_picture', r'/picture-{idPicture:\d+}-{namePicture}')
+    config.add_route('original_picture', r'/picture-{idItem:\d+}-{nameItem}')
     config.add_route('thumbnail_over',
                      r'/thumbnail-over-{idItem:\d+}-{nameItem}')
     # Administration route

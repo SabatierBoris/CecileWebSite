@@ -23,8 +23,7 @@ class GroupView(object):
 
     @MenuAdministration(order=21,
                         display='Gestion des groupes',
-                        route_name='group_list',
-                        route_name_category=None)
+                        route_name='group_list')
     @view_config(route_name='group_list',
                  renderer='admin/groupList.mak',
                  permission='admin')

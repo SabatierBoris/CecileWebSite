@@ -60,7 +60,7 @@ class Picture(Item, TaggableItem, BASE):
         """
         Get the view url of the item
         """
-        return request.route_url('view_picture',idPicture=self.uid,namePicture=self.name)
+        return request.route_url('view_picture',idItem=self.uid,nameItem=self.name)
 
     @property
     def image(self):
@@ -98,8 +98,8 @@ class Picture(Item, TaggableItem, BASE):
         """
         Delete picture
         """
-        os.rm(self.thumbnail)
-        os.rm(self.thumbnailover)
-        os.rm(self.original_image_name)
+        os.remove(self.thumbnail)
+        os.remove(self.thumbnailover)
+        os.remove(self.original_image_name)
 
         super(Picture,self).delete()

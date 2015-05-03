@@ -31,10 +31,6 @@ class ItemView(object):
 
         thumb = item.thumbnail
 
-        print(item)
-        print(item.original_image_name)
-        print(thumb)
-
         response = FileResponse(thumb,
                                 request=self.request,
                                 content_type='image/jpeg')

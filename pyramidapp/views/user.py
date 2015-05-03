@@ -23,8 +23,7 @@ class UserView(object):
 
     @MenuAdministration(order=22,
                         display='Gestion des utilisateurs',
-                        route_name='user_list',
-                        route_name_category=None)
+                        route_name='user_list')
     @view_config(route_name='user_list',
                  renderer='admin/userList.mak',
                  permission='admin')

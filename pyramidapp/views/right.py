@@ -21,8 +21,7 @@ class RightView(object):
 
     @MenuAdministration(order=20,
                         display='Gestion des droits',
-                        route_name='right_list',
-                        route_name_category=None)
+                        route_name='right_list')
     @view_config(route_name='right_list',
                  renderer='admin/rightList.mak',
                  permission='admin')

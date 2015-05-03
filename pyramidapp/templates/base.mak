@@ -7,7 +7,7 @@
 				% else:
 					<li>
 				% endif
-					<a href="${request.route_url('view_category',idCategory=list[page].category.uid,nameCategory=list[page].category.name)}">
+					<a href="${request.route_url('view_category',idItem=list[page].category.uid,nameItem=list[page].category.name)}">
 						${list[page].category.name}
 					</a>
 					${menuCategories(list[page].sublist)}

@@ -1,14 +1,14 @@
 <%inherit file="base.mak"/>
 <div class="picture">
 	<span class="image">
-		<img class="img-responsive center-block" src="${request.route_url('original_picture',idPicture=picture.uid,namePicture=picture.name)}" alt="${picture.name}"/>
-		<% prev = picture.previous %>
+		<img class="img-responsive center-block" src="${request.route_url('original_picture',idItem=item.uid,nameItem=item.name)}" alt="${item.name}"/>
+		<% prev = item.previous %>
 		% if prev:
 			<div class="img-button prev">
 				<a href="${prev.view_url(request)}">&#x2039;</a>
 			</div>
 		% endif
-		<% next = picture.next %>
+		<% next = item.next %>
 		% if next:
 			<div class="img-button next">
 				<a href="${next.view_url(request)}">&#x203a;</a>

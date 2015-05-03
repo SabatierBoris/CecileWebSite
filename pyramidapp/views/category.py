@@ -27,8 +27,8 @@ class CategoryView(object):
         """
         Display the content of a category
         """
-        idcategory = int(self.request.matchdict.get('idCategory', -1))
-        namecategory = self.request.matchdict.get('nameCategory', '')
+        idcategory = int(self.request.matchdict.get('idItem', -1))
+        namecategory = self.request.matchdict.get('nameItem', '')
         current_page = self.request.GET.get('page', 1)
 
         category = Category.by_uid(idcategory)
@@ -41,15 +41,16 @@ class CategoryView(object):
                                     page=current_page,
                                     items_per_page=12)
 
-        return {'idCategory': idcategory,
-                'nameCategory': namecategory,
+        return {'item' : category,
+                'idCategory' : idcategory,
                 'contents': paginated_contents,
                 'pagesLink': paginated_contents.get_pages(url='?page=$page')}
 
     @MenuAdministration(order=1,
                         display='Nouvelle categorie',
                         route_name='new_category',
-                        route_name_category='new_sub_category')
+                        route_name_for_item='new_sub_category',
+                        cls=Category)
     @view_config(route_name='new_sub_category',
                  renderer='admin/category.mak',
                  permission='write')
@@ -60,8 +61,8 @@ class CategoryView(object):
         """
         Display the content of a category
         """
-        idcategory = int(self.request.matchdict.get('idCategory', -1))
-        namecategory = self.request.matchdict.get('nameCategory', None)
+        idcategory = int(self.request.matchdict.get('idItem', -1))
+        namecategory = self.request.matchdict.get('nameItem', None)
         parent = Category.by_uid(idcategory)
         if (idcategory != -1 and parent is None) or \
            (parent and parent.name != namecategory):
@@ -81,8 +82,8 @@ class CategoryView(object):
                     session.flush()
                 session.commit()
                 url = self.request.route_url('view_category',
-                                             idCategory=category.uid,
-                                             nameCategory=category.name)
+                                             idItem=category.uid,
+                                             nameItem=category.name)
                 return HTTPFound(url)
             except IntegrityError:
                 errors = form.errors.get('name', [])
@@ -90,15 +91,16 @@ class CategoryView(object):
                 form.errors['name'] = errors
 
         return {'title': 'Nouvelle categorie',
-                'idCategory': idcategory,
-                'nameCategory': namecategory,
+                'item': parent,
+                'idCategory' : idcategory,
                 'form': form}
 
 
     @MenuAdministration(order=2,
                         display='Modifier categorie',
                         route_name=None,
-                        route_name_category='edit_category')
+                        route_name_for_item='edit_category',
+                        cls=Category)
     @view_config(route_name='edit_category',
                  renderer='admin/category.mak',
                  permission='write')
@@ -106,8 +108,8 @@ class CategoryView(object):
         """
         Display the content of a category
         """
-        idcategory = int(self.request.matchdict.get('idCategory', -1))
-        namecategory = self.request.matchdict.get('nameCategory', None)
+        idcategory = int(self.request.matchdict.get('idItem', -1))
+        namecategory = self.request.matchdict.get('nameItem', None)
         category = Category.by_uid(idcategory)
         if category is None:
             return HTTPNotFound()
@@ -128,8 +130,8 @@ class CategoryView(object):
                     #session.flush()
                 session.commit()
                 url = self.request.route_url('view_category',
-                                             idCategory=category.uid,
-                                             nameCategory=category.name)
+                                             idItem=category.uid,
+                                             nameItem=category.name)
                 return HTTPFound(url)
             except IntegrityError:
                 errors = form.errors.get('name', [])
@@ -137,27 +139,28 @@ class CategoryView(object):
                 form.errors['name'] = errors
 
         return {'title': 'Modifier la categorie',
-                'idCategory': idcategory,
-                'nameCategory': namecategory,
+                'item': category,
+                'idCategory' : category.uid,
                 'form': form}
 
     @MenuAdministration(order=3,
                         display='Supprimer categorie',
                         route_name=None,
-                        route_name_category='delete_category')
+                        route_name_for_item='delete_category',
+                        cls=Category)
     @view_config(route_name='delete_category', permission='write')
     def delete_category(self):
         """
         Remove a category
         """
-        idcategory = int(self.request.matchdict.get('idCategory', -1))
-        namecategory = self.request.matchdict.get('nameCategory', None)
+        idcategory = int(self.request.matchdict.get('idItem', -1))
+        namecategory = self.request.matchdict.get('nameItem', None)
 
         category = Category.by_uid(idcategory)
         if category.parent != None:
             url = self.request.route_url('view_category',
-                                         idCategory=category.parent.uid,
-                                         nameCategory=category.parent.name)
+                                         idItem=category.parent.uid,
+                                         nameItem=category.parent.name)
         else:
             url = self.request.route_url('home')
         if category is None:

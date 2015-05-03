@@ -16,10 +16,11 @@ class MenuItem(object):
     """
     Item of the administration menu
     """
-    def __init__(self, display, route_name_category, route_name):
+    def __init__(self, display, route_name, route_name_for_item, cls):
         self.display = display
-        self.route_name_category = route_name_category
+        self.route_name_for_item = route_name_for_item
         self.route_name = route_name
+        self.cls = cls
         self.url = None
 
 
@@ -30,11 +31,11 @@ class MenuAdministration(object):
     """
     PAGES = {}
 
-    def __init__(self, order, display, route_name_category, route_name):
+    def __init__(self, order, display, route_name, route_name_for_item=None, cls=None):
         """
         Constructor
         """
-        val = MenuItem(display, route_name_category, route_name)
+        val = MenuItem(display, route_name, route_name_for_item, cls)
         if order in MenuAdministration.PAGES:
             LOG.warning("Order %s is already exist (%s - %s) and (%s - %s)",
                         order, route_name_category, route_name,
@@ -74,22 +75,25 @@ class MenuAdministration(object):
         """
         accessible_pages = {}
         request = event['request']
-        idcategory = event.rendering_val.get('idCategory', None)
-        namecategory = event.rendering_val.get('nameCategory', None)
+
+        item = event.rendering_val.get('item', None)
 
         for page in cls.PAGES:
-            item = cls.PAGES[page]
-            item.url = None
-            if item.route_name_category and \
-               idcategory and \
-               namecategory and \
-               cls.is_allowed_to_view(request, item.route_name_category):
-                item.url = request.route_url(item.route_name_category,
-                                             idCategory=idcategory,
-                                             nameCategory=namecategory)
-            elif item.route_name and \
-                    cls.is_allowed_to_view(request, item.route_name):
-                item.url = request.route_url(item.route_name)
+            menu_item = cls.PAGES[page]
+            menu_item.url = None
+            if menu_item.route_name_for_item and \
+               item and \
+               (
+                   menu_item.cls == None or
+                   isinstance(item, menu_item.cls)
+               ) and \
+               cls.is_allowed_to_view(request, menu_item.route_name_for_item):
+                menu_item.url = request.route_url(menu_item.route_name_for_item,
+                                             idItem=item.uid,
+                                             nameItem=item.name)
+            elif menu_item.route_name and \
+                    cls.is_allowed_to_view(request, menu_item.route_name):
+                menu_item.url = request.route_url(menu_item.route_name)
 
         for key, value in cls.PAGES.items():
             if value.url:
