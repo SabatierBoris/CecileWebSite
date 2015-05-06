@@ -87,8 +87,8 @@ class PictureView(object):
                     session.flush()
                 session.commit()
                 url = self.request.route_url('view_category',
-                                             idCategory=parent.uid,
-                                             nameCategory=parent.name)
+                                             idItem=parent.uid,
+                                             nameItem=parent.name)
                 return HTTPFound(url)
             except IntegrityError:
                 errors = form.errors.get('name', [])
@@ -97,7 +97,6 @@ class PictureView(object):
 
         return {'title': 'Nouvelle Image',
                 'idCategory': idcategory,
-                'nameCategory': namecategory,
                 'item': parent,
                 'form': form}
 #
