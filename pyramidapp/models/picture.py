@@ -38,7 +38,7 @@ class Picture(Item, TaggableItem, BASE):
         """
         Get the thumbnail of the item
         """
-        thumbnail = os.path.join(self.get_dir(), "thumbnail_%s.jpeg"%(os.path.basename(self.original_image_name)))
+        thumbnail = os.path.join(self.get_dir(), "thumbnail_%s.png"%(os.path.basename(self.original_image_name)))
         if not os.path.isfile(thumbnail):
             generate_thumbnail(self.original_image_name, thumbnail)
         return thumbnail
@@ -48,7 +48,7 @@ class Picture(Item, TaggableItem, BASE):
         """
         Get the thumbnailOver of the item
         """
-        thumbnail = os.path.join(self.get_dir(), "thumbnail_over_%s.jpeg"%(os.path.basename(self.original_image_name)))
+        thumbnail = os.path.join(self.get_dir(), "thumbnail_over_%s.png"%(os.path.basename(self.original_image_name)))
         if not os.path.isfile(thumbnail):
             generate_thumbnail_over(self.original_image_name,
                                     thumbnail,
