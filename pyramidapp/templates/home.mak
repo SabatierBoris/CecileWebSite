@@ -1,6 +1,22 @@
 <%inherit file="base.mak"/>
+    <%
+	  nbItems=len(contents)
+	%>
+    % if nbItems <= 4:
+	    <%
+		  style="col-md-6 col-sm-6 col-xs-6"
+		%>
+    % elif nbItems <= 6:
+	    <%
+		  style="col-md-4 col-sm-4 col-xs-6"
+		%>
+	% else:
+	    <%
+		  style="col-md-3 col-sm-4 col-xs-6"
+		%>
+	% endif
 	% for content in contents:
-		<div class="col-md-3 col-sm-4 col-xs-6 portfolio-item">
+		<div class="${style} portfolio-item">
 			<a href="${content.view_url(request)}" class="hoverimg">
 				<img class="img-responsive orignal" src="${request.route_url('thumbnail',idItem=content.uid,nameItem=content.name)}" alt="${content.name}"/>
 				<img class="img-responsive hover" src="${request.route_url('thumbnail_over',idItem=content.uid,nameItem=content.name)}" alt="${content.name}"/>
