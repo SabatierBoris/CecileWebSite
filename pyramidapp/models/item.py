@@ -78,6 +78,7 @@ class Item(Dateable, BASE):
                     .query(Item)
                     .filter(Item.parent_id == self.parent_id)
                     .filter(Item.uid < self.uid)
+                    .filter(Item.item_type != 'category')
                     .order_by(Item.uid.desc())
                     .first())
 
@@ -90,6 +91,7 @@ class Item(Dateable, BASE):
                     .query(Item)
                     .filter(Item.parent_id == self.parent_id)
                     .filter(Item.uid > self.uid)
+                    .filter(Item.item_type != 'category')
                     .order_by(Item.uid)
                     .first())
 
