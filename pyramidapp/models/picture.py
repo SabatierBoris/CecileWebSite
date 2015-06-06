@@ -38,7 +38,7 @@ class Picture(Item, TaggableItem, BASE):
         """
         Get the thumbnail of the item
         """
-        thumbnail = os.path.join(self.get_dir(), "thumbnail_%s.png"%(os.path.basename(self.original_image_name)))
+        thumbnail = Item.asciify_string(os.path.join(self.get_dir(), "thumbnail_%s.png"%(os.path.basename(self.original_image_name))))
         if not os.path.isfile(thumbnail):
             generate_thumbnail(self.original_image_name, thumbnail)
         return thumbnail
@@ -48,7 +48,7 @@ class Picture(Item, TaggableItem, BASE):
         """
         Get the thumbnailOver of the item
         """
-        thumbnail = os.path.join(self.get_dir(), "thumbnail_over_%s.png"%(os.path.basename(self.original_image_name)))
+        thumbnail = Item.asciify_string(os.path.join(self.get_dir(), "thumbnail_over_%s.png"%(os.path.basename(self.original_image_name))))
         if not os.path.isfile(thumbnail):
             generate_thumbnail_over(self.original_image_name,
                                     thumbnail,
@@ -77,7 +77,7 @@ class Picture(Item, TaggableItem, BASE):
         val.file.seek(0)
         ext = imghdr.what('unused', val.file.read())
         val.file.seek(0)
-        path = os.path.join(self.get_dir(), "Picture_original_%s.%s" % (self.name,ext))
+        path = Item.asciify_string(os.path.join(self.get_dir(), "Picture_original_%s.%s" % (self.name,ext)))
         self.original_image_name = path
         output_file = open(path, 'wb')
 

@@ -3,6 +3,7 @@
 Item Model module
 """
 import os
+import unicodedata
 
 from pyramid.threadlocal import get_current_registry
 
@@ -120,6 +121,13 @@ class Item(Dateable, BASE):
         if self.parent:
             base = self.parent.get_dir()
         return base
+
+    @classmethod
+    def asciify_string(cls, string):
+        """
+        Return ASCII compliante value of the string
+        """
+        return unicodedata.normalize('NFKD', string).encode('ASCII', 'ignore')
 
     def get_dir(self):
         """

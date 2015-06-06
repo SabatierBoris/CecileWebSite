@@ -64,7 +64,7 @@ class Category(Item):
         """
         Get the thumbnail of the item
         """
-        thumbnail = os.path.join(self.get_dir(), "thumbnail_%s.png"%(os.path.basename(self.original_image_name)))
+        thumbnail = Item.asciify_string(os.path.join(self.get_dir(), "thumbnail_%s.png"%(os.path.basename(self.original_image_name))))
         if not os.path.isfile(thumbnail):
             generate_thumbnail(self.original_image_name, thumbnail)
         return thumbnail
@@ -74,7 +74,7 @@ class Category(Item):
         """
         Get the thumbnailOver of the item
         """
-        thumbnail = os.path.join(self.get_dir(), "thumbnail_over_%s.png"%(os.path.basename(self.original_image_name)))
+        thumbnail = Item.asciify_string(os.path.join(self.get_dir(), "thumbnail_over_%s.png"%(os.path.basename(self.original_image_name))))
         if not os.path.isfile(thumbnail):
             generate_thumbnail_over(self.original_image_name,
                                     thumbnail,
@@ -107,7 +107,7 @@ class Category(Item):
         output_file.close()
 
     def getOriginalImageName(self, ext):
-        return os.path.join(self.get_dir(), "Category_original_%s.%s" % (self.name,ext))
+        return Item.asciify_string(os.path.join(self.get_dir(), "Category_original_%s.%s" % (self.name,ext)))
 
     def delete(self):
         for child in self.children:
@@ -125,7 +125,7 @@ def create_category_dir(target, value, oldvalue, initiator):
     """
     initiator = initiator
     base = target.get_base()
-    new_dir = os.path.join(base, value)
+    new_dir = Item.asciify_string(os.path.join(base, value))
     if not oldvalue:
         old_dir = os.path.join(base, oldvalue)
         os.renames(old_dir, new_dir)
