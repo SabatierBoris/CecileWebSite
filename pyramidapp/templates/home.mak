@@ -2,11 +2,11 @@
     <%
 	  nbItems=len(contents)
 	%>
-    % if nbItems <= 4:
+    % if nbItems <= 2 and pagesLink:
 	    <%
 		  style="col-md-6 col-sm-6 col-xs-6"
 		%>
-    % elif nbItems <= 6:
+    % elif nbItems <= 6 and pagesLink:
 	    <%
 		  style="col-md-4 col-sm-4 col-xs-6"
 		%>
