@@ -17,10 +17,11 @@ from . import (
 
 from pyramidapp.models.item import Item
 from pyramidapp.models.tag import TaggableItem
+from pyramidapp.models.comment import CommentableItem
 from pyramidapp.models.image import generate_thumbnail, generate_thumbnail_over
 
 
-class Picture(Item, TaggableItem, BASE):
+class Picture(Item, TaggableItem, CommentableItem, BASE):
     # pylint: disable=R0903
     #    Too fee pyblic methods: we are juste a model
     """
