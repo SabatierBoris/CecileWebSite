@@ -21,7 +21,8 @@ class MyPage(Page):
         """
         Get n tuple of symbol, url and boolean if it's current page
         """
-        self.url = url
+        if url:
+            self.url = url
         radius = int(re.search(r'~(\d+)~', form).group(1))
         if self.first_page == self.last_page:
             return

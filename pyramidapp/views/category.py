@@ -44,7 +44,7 @@ class CategoryView(object):
         return {'item' : category,
                 'idCategory' : idcategory,
                 'contents': paginated_contents,
-                'pagesLink': paginated_contents.get_pages(url='?page=$page')}
+                'nbPages': len(contents)/12}
 
     @MenuAdministration(order=1,
                         display='Nouvelle categorie',

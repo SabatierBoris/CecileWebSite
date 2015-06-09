@@ -2,11 +2,11 @@
     <%
 	  nbItems=len(contents)
 	%>
-    % if nbItems <= 2 and pagesLink:
+    % if nbItems <= 2 and nbPages < 1:
 	    <%
 		  style="col-md-6 col-sm-6 col-xs-6"
 		%>
-    % elif nbItems <= 6 and pagesLink:
+    % elif nbItems <= 6 and nbPages < 1:
 	    <%
 		  style="col-md-4 col-sm-4 col-xs-6"
 		%>
@@ -26,7 +26,7 @@
 
 	<div class="col-xs-12 text-center">
 		<ul class="pagination">
-			% for link in pagesLink:	
+			% for link in contents.get_pages(url='?page=$page'):	
 				% if link[2]:
 					<li class="active">
 				% else:
