@@ -17,6 +17,9 @@ from sqlalchemy.orm import backref, relationship
 from pyramidapp.models.item import Item
 from pyramidapp.models.image import generate_thumbnail, generate_thumbnail_over
 
+import logging
+log = logging.getLogger(__name__)
+
 
 class Category(Item):
     # pylint: disable=R0903
@@ -107,6 +110,7 @@ class Category(Item):
         output_file.close()
 
     def getOriginalImageName(self, ext):
+        log.error("GetOriginalImageName - %s - %s - %s", ext, self.get_dir(), self.name)
         return Item.asciify_string(os.path.join(self.get_dir(), "Category_original_%s.%s" % (self.name,ext)))
 
     def delete(self):
