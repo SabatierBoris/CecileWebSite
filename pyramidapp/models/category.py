@@ -117,7 +117,7 @@ class Category(Item):
         for child in self.children:
             child.delete()
 
-        shutil.rmtree(self.get_dir())
+        shutil.rmtree(Item.asciify_string(self.get_dir()))
 
         super(Category,self).delete()
 
