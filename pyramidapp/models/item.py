@@ -127,7 +127,7 @@ class Item(Dateable, BASE):
         """
         Return ASCII compliante value of the string
         """
-        return unicodedata.normalize('NFKD', string).encode('ASCII', 'ignore')
+        return unicodedata.normalize('NFKD', string).encode('ASCII', 'ignore').decode('ASCII')
 
     def get_dir(self):
         """
