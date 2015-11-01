@@ -17,6 +17,7 @@ REQUIRES = [
     # BDD
     'sqlalchemy',
     'alembic',
+    'psycopg2',
     # Template
     'pyramid_mako',
     # Form
