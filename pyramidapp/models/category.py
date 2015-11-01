@@ -68,7 +68,7 @@ class Category(Item):
         Get the thumbnail of the item
         """
         thumbnail = Item.asciify_string(os.path.join(self.get_dir(), "thumbnail_%s.png"%(os.path.basename(self.original_image_name))))
-        if not os.path.isfile(thumbnail):
+        if not (hasattr(self, 'do_not_generate') and self.do_not_generate) and not os.path.isfile(thumbnail):
             generate_thumbnail(self.original_image_name, thumbnail)
         return thumbnail
 
@@ -78,7 +78,7 @@ class Category(Item):
         Get the thumbnailOver of the item
         """
         thumbnail = Item.asciify_string(os.path.join(self.get_dir(), "thumbnail_over_%s.png"%(os.path.basename(self.original_image_name))))
-        if not os.path.isfile(thumbnail):
+        if not (hasattr(self, 'do_not_generate') and self.do_not_generate) and not os.path.isfile(thumbnail):
             generate_thumbnail_over(self.original_image_name,
                                     thumbnail,
                                     self.name.upper())

@@ -40,6 +40,13 @@ class Item(Dateable, BASE):
                                        'parent_id',
                                        name='item_by_parent'),)
 
+    def __init__(self):
+        """
+        Constructor
+        """
+        print("BOUBOUP !!!")
+        self.do_not_generate = False
+
     @property
     def thumbnail(self):
         """

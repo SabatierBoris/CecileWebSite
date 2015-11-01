@@ -3,17 +3,17 @@
 __init__ file of the pyramid application
 Contain the main function
 """
-from pyramid.config import Configurator
 from pyramid.authentication import AuthTktAuthenticationPolicy
+from pyramid.config import Configurator
 from pyramid.response import Response
 from pyramid.session import SignedCookieSessionFactory
 
+from pyramidapp.models import BASE, DB_SESSION
+from pyramidapp.models.item import Item
+from pyramidapp.models.security import ACL, groups_finder
+
 from sqlalchemy import engine_from_config, event
 
-from .models import DB_SESSION, BASE
-from .models.security import groups_finder
-from .models.security import ACL
-from pyramidapp.models.item import Item
 import os
 
 
@@ -39,18 +39,6 @@ def main(global_config, **settings):
     else:
         engine = engine_from_config(settings, 'sqlalchemy.')
 
-    # pylint: disable=W0612
-    @event.listens_for(engine, "connect")
-    def do_connect(dbapi_connection, connection_record):
-        """
-        This function set isolation_level to None
-        if use a sqlite database for be able to
-        use nested_session
-        """
-        connection_record = connection_record
-        if engine.dialect.name == "sqlite":
-            dbapi_connection.isolation_level = None
-
     DB_SESSION.configure(bind=engine)
 
     factory_s = settings['pyramid.session_factory_secret']
@@ -62,12 +50,13 @@ def main(global_config, **settings):
     config = Configurator(settings=settings,
                           authentication_policy=auth_policy,
                           root_factory=RootFactory)
-    config.include('pyramid_mako')
+
     config.set_session_factory(session_factory)
     config.add_static_view(name='static', path='pyramidapp:static')
 
     config.add_route('home', '/')
 
+    #Category routes
     config.add_route('view_category',
                      r'/category-{idItem:\d+}-{nameItem}/index.html')
     config.add_route('new_category', r'/new-category.html')
@@ -91,12 +80,20 @@ def main(global_config, **settings):
                      r'/category-{idItem:\d+}-{nameItem}/%s' % (
                          'new-picture.html'))
 
+    #Thumbnail route
     config.add_route('thumbnail', r'/thumbnail-{idItem:\d+}-{nameItem}')
     config.add_route('original_picture', r'/picture-{idItem:\d+}-{nameItem}')
     config.add_route('thumbnail_over',
                      r'/thumbnail-over-{idItem:\d+}-{nameItem}')
-    # Administration route
+
+
+
+
+
+    #Admin routes
     config.add_route('home_admin', r'/admin/index.html')
+
+    config.add_route('manage_comments', r'/admin/comment/list.html')
 
     config.add_route('right_list', r'/admin/right/list.html')
     config.add_route('right_list:new', r'/admin/right/list-{new}.html')
@@ -114,7 +111,6 @@ def main(global_config, **settings):
     config.add_route('logout', r'/logout.html')
 
     config.scan()
-
     config.begin()
 
     # Thumbnail remove
@@ -123,15 +119,11 @@ def main(global_config, **settings):
         base = os.environ[settings['content.dir']]
     else:
         base = settings['content.dir']
-    for root, directories, filenames in os.walk(base):
-        for filename in filenames:
-            if "thumbnail_" in filename:
-                print(os.path.join(root,filename))
-                os.remove(os.path.join(root,filename))
-    #for item in Item.all():
-    #    if item.thumbnail and os.path.isfile(item.thumbnail):
-    #        os.remove(item.thumbnail)
-    #    if item.thumbnailover and os.path.isfile(item.thumbnailover):
-    #        os.remove(item.thumbnailover)
+    for item in Item.all():
+        item.do_not_generate=True
+        if item.thumbnail and os.path.isfile(item.thumbnail):
+            os.remove(item.thumbnail)
+        if item.thumbnailover and os.path.isfile(item.thumbnailover):
+            os.remove(item.thumbnailover)
 
     return config.make_wsgi_app()
