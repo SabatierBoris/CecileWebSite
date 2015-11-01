@@ -42,17 +42,33 @@ def generate_password(size=6, chars=string.ascii_letters+string.digits):
     """
     return ''.join(random.choice(chars) for _ in range(size))
 
+def init_rights(session):
+    """
+    Create rights used by the app
+    """
+    query = session.query(Right).filter_by(name='admin')
+    right = query.scalar()
+    if right is None:
+        right = Right('admin')
+        session.add(right)
+    query = session.query(Right).filter_by(name='write')
+    right = query.scalar()
+    if right is None:
+        right = Right('write')
+        session.add(right)
+    query = session.query(Right).filter_by(name='comment')
+    right = query.scalar()
+    if right is None:
+        right = Right('comment')
+        session.add(right)
 
 def init_admin(session):
     """
     Create the admin if doesn't exist
     """
     password = None
-    query = session.query(Right).filter_by(name='administration')
+    query = session.query(Right).filter_by(name='admin')
     right = query.scalar()
-    if right is None:
-        right = Right('admin')
-        session.add(right)
 
     query = session.query(Group).filter_by(name='admins')
     group = query.scalar()
@@ -93,4 +109,5 @@ def main(argv=None):
     else:
         engine = engine_from_config(settings, 'sqlalchemy.')
     DB_SESSION.configure(bind=engine)
+    init_rights(DB_SESSION)
     init_admin(DB_SESSION)
