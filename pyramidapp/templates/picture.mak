@@ -16,15 +16,11 @@
 		% endif
 	</span>
 	<div class="description">
-		<h1>Title</h1>
-		blablzdf<br/>
-		blablzdf<br/>
-		blablzdf<br/>
-		blablzdf<br/>
-		blablzdf<br/>
-		blablzdf<br/>
-		blablzdf<br/>
-		blablzdf<br/>
-
+		<%include file="commentDisplay.mak" args="item=item"/>
 	</div>
 </div>
+
+<%block name="css">
+	${parent.css()}
+	<link rel="stylesheet" href="${request.static_url('pyramidapp:static/css/font-awesome.min.css')}"/>
+</%block>

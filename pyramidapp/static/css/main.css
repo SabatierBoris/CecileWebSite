@@ -188,6 +188,11 @@ ul.navbar-nav ul.navbar-nav {
 	width:10em;
 }
 
+div.comment {
+    background-color: rgba(0, 0, 0, 0.1);
+    margin-left : 2em;
+}
+
 a.hoverimg {
 	position: relative;
 	display: block;

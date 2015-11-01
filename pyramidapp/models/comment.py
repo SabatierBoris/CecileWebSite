@@ -8,7 +8,8 @@ from sqlalchemy import Integer
 from sqlalchemy import Column
 from sqlalchemy import String
 from sqlalchemy import Text
-from sqlalchemy.orm import relationship
+from sqlalchemy import Boolean
+from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declared_attr
 
 from . import (
@@ -29,11 +30,15 @@ class Comment(Dateable, BASE):
                   nullable=False,
                   info={'trim': True})
     comment = Column(Text, nullable=False)
+    item_id = Column(Integer, ForeignKey('item.uid'), nullable=False)
+    item = relationship('Item', foreign_keys=[item_id])
 
+    valid = Column(Boolean, unique=False, default=False, nullable=False)
 
-ASSOCIATION_TABLE = Table('item_comment', BASE.metadata,
-                          Column('comment_id', Integer, ForeignKey(Comment.uid)),
-                          Column('item_id', Integer, ForeignKey(Item.uid)))
+    parent_id = Column(Integer, ForeignKey('comment.uid'), nullable=True)
+    children = relationship('Comment',
+                            cascade="all",
+                            backref=backref('parent', remote_side='Comment.uid'))
 
 
 class CommentableItem(object):
@@ -42,12 +47,9 @@ class CommentableItem(object):
     """
     Builtin class for add the tags attribute to items
     """
-    @staticmethod
     @declared_attr
-    def comments():
+    def comments(self):
         """
         Attribute to get the comments of an item
         """
-        return relationship('Comment',
-                            secondary='item_comment',
-                            backref='items')
+        return relationship('Comment', lazy='dynamic')

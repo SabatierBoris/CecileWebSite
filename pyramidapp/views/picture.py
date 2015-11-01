@@ -11,7 +11,9 @@ from sqlalchemy.exc import IntegrityError
 from pyramidapp.models.menu import MenuAdministration
 from pyramidapp.models.category import Category
 from pyramidapp.models.picture import Picture
+from pyramidapp.models.comment import Comment
 from pyramidapp.forms.picture import PictureForm
+from pyramidapp.forms.comment import CommentForm
 
 
 class PictureView(object):
@@ -50,8 +52,24 @@ class PictureView(object):
         if picture is None or picture.name != namepicture:
             return HTTPNotFound()
 
+        form = CommentForm(self.request.POST, request=self.request)
+
+        if self.request.method == 'POST' and form.validate():
+            session = Picture.get_session()
+            # pylint: disable=E1101
+            with session.begin_nested():
+                comment = Comment()
+                comment.item = picture
+                # pylint: disable=E1101
+                form.populate_obj(comment)
+                session.add(comment)
+                session.flush()
+            session.commit()
+            form = CommentForm(request=self.request)
+
         return {'item': picture,
-                'idCategory': picture.parent.uid}
+                'idCategory': picture.parent.uid,
+                'form' : form}
 
 
     @MenuAdministration(order=4,
