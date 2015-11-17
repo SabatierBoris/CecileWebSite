@@ -104,8 +104,8 @@ def main(argv=None):
     config_uri = args.config
     setup_logging(config_uri)
     settings = get_appsettings(config_uri)
-    if 'OPENSHIFT_POSTGRESQL_DB_URL' in os.environ:
-        engine = engine_from_config(settings, 'sqlalchemy.', url=os.environ['OPENSHIFT_POSTGRESQL_DB_URL'])
+    if 'DB_URL' in os.environ:
+        engine = engine_from_config(settings, 'sqlalchemy.', url=os.environ['DB_URL'])
     else:
         engine = engine_from_config(settings, 'sqlalchemy.')
     DB_SESSION.configure(bind=engine)
