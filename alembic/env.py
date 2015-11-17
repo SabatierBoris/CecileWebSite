@@ -37,8 +37,8 @@ def run_migrations_offline():
     script output.
 
     """
-    if 'OPENSHIFT_POSTGRESQL_DB_URL' in os.environ:
-        url = os.environ['OPENSHIFT_POSTGRESQL_DB_URL'],
+    if 'DB_URL' in os.environ:
+        url = os.environ['DB_URL'],
     else:
         url = config.get_main_option("sqlalchemy.url")
     context.configure(url=url, target_metadata=target_metadata)
@@ -58,7 +58,7 @@ def run_migrations_online():
         engine = engine_from_config(
             config.get_section("app:main"),
             prefix='sqlalchemy.',
-            url=os.environ['OPENSHIFT_POSTGRESQL_DB_URL'],
+            url=os.environ['DB_URL'],
             poolclass=pool.NullPool)
     else:
         engine = engine_from_config(
