@@ -101,7 +101,8 @@ a, a:hover, a:active, a:focus {
 .navbar-fixed-left footer {
 	display:none;
 	border-top: 1px solid #FFF;
-	height: 4em;
+	height: 2em;
+	padding-right:10px !important;
 }
 
 .navbar-fixed-left {
@@ -237,8 +238,8 @@ a.hoverimg:hover img.original {
 		min-height: 100%;
 		height: auto !important;
 		height: 100%;
-		margin: 0 auto -4em;
-		padding: 0 0 4em;
+		margin: 0 auto -2em;
+		padding: 0 0 2em;
 	}
 
 	#page-content-wrapper {
