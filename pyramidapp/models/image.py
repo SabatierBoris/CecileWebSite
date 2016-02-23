@@ -13,8 +13,8 @@ from itertools import product
 
 THUMBNAIL_BLUR = 2
 THUMBNAIL_SHADOW_COLOR = (255, 255, 255)
-THUMBNAIL_SHADOW_INFO = (0, 1)
-THUMBNAIL_TEXT_COLOR = (0, 0, 0)
+THUMBNAIL_SHADOW_INFO = (0, 0)
+THUMBNAIL_TEXT_COLOR = (0xFF, 0xBA, 0x00)
 THUMBNAIL_SIZE = (800, 600)
 THUMBNAIL_POLICE = "pyramidapp/static/fonts/OxygenMono-Regular.otf"
 THUMBNAIL_BACKGROUND = (0, 0, 0, 0)
@@ -62,8 +62,8 @@ def add_centered_text(image, text, police_name, police_size, color):
     """
     Add a text in center of image
     """
-    working_im = image.copy()
-    draw = ImageDraw.Draw(working_im)
+    tmp_im = Image.new('RGBA', image.size, (color[0], color[1], color[2], 0))
+    draw = ImageDraw.Draw(tmp_im)
 
     font = ImageFont.truetype(police_name, police_size)
     text_size = font.getsize(text)
@@ -75,7 +75,7 @@ def add_centered_text(image, text, police_name, police_size, color):
                      int((image.size[1]-text_size[1])/2))
     draw.text(text_position, text, font=font, fill=color)
 
-    return working_im
+    return Image.composite(image, tmp_im, ImageChops.invert(tmp_im))
 
 
 def generate_thumbnail(original, target):
@@ -114,11 +114,11 @@ def generate_thumbnail_over(original, target, text, blur=True):
         police_size = calcul_full_size_text_police(image.size,
                                                    text,
                                                    police)
-        image1 = add_centered_blured_shadow(image1,
-                                            text,
-                                            (police, police_size),
-                                            THUMBNAIL_SHADOW_COLOR,
-                                            THUMBNAIL_SHADOW_INFO)
+        #image1 = add_centered_blured_shadow(image1,
+        #                                    text,
+        #                                    (police, police_size),
+        #                                    THUMBNAIL_SHADOW_COLOR,
+        #                                    THUMBNAIL_SHADOW_INFO)
         image1 = add_centered_text(image1,
                                    text,
                                    police,
