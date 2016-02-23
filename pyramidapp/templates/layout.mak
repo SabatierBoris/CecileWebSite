@@ -7,6 +7,9 @@
 		<meta name="description" content="Cécile website">
 		<meta name="author" content="Boris SABATIER" />
 
+		## Pinterest
+		<meta name="p:domain_verify" content="2334f388ffafa5d6b80c33b4debcc886"/>
+
 		<link rel="shortcut icon" type="image/png" href="${request.static_url('pyramidapp:static/images/favicon.png')}"/>
 		<title>Cécile website</title>
 
