@@ -122,12 +122,7 @@ class CategoryView(object):
                 with session.begin_nested():
                     if form.name.data != category.name:
                         category.updateName(form.name.data)
-                    # category = Category()
-                    # category.parent = parent
-                    # pylint: disable=E1101
-                    #form.populate_obj(category)
-                    #session.add(category)
-                    #session.flush()
+                    form.populate_obj(category)
                 session.commit()
                 url = self.request.route_url('view_category',
                                              idItem=category.uid,
