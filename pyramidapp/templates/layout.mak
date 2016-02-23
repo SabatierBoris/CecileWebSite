@@ -7,7 +7,7 @@
 		<meta name="description" content="Cécile website">
 		<meta name="author" content="Boris SABATIER" />
 
-		<link rel="shortcut icon" href="http://placehold.it/60x60">
+		<link rel="shortcut icon" type="image/png" href="${request.static_url('pyramidapp:static/images/favicon.png')}"/>
 		<title>Cécile website</title>
 
 		<%block name="css">
