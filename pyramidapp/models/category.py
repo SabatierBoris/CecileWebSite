@@ -108,6 +108,13 @@ class Category(Item):
                 val.file.close()
             output_file.write(data)
         output_file.close()
+        self.cleanThumbnail()
+
+    def cleanThumbnail(self):
+        self.do_not_generate = True
+        for filename in (self.thumbnail, self.thumbnailover):
+            if os.path.exists(filename):
+                os.remove(filename)
 
     def getOriginalImageName(self, ext):
         log.error("GetOriginalImageName - %s - %s - %s", ext, self.get_dir(), self.name)
