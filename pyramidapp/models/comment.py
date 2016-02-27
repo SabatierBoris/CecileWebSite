@@ -40,6 +40,14 @@ class Comment(Dateable, BASE):
                             cascade="all",
                             backref=backref('parent', remote_side='Comment.uid'))
 
+    @classmethod
+    def get_waiting_for_validation(cls):
+        """
+        Get all comment in waiting for validation
+        """
+        cat = cls.get_session().query(Comment)
+        return cat.filter(Comment.valid == False).all()
+
 
 class CommentableItem(object):
     # pylint: disable=R0903

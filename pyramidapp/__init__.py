@@ -94,6 +94,8 @@ def main(global_config, **settings):
     config.add_route('home_admin', r'/admin/index.html')
 
     config.add_route('manage_comments', r'/admin/comment/list.html')
+    config.add_route('validate_comment', r'/admin/comment/validate-{idComment:\d+}.html')
+    config.add_route('delete_comment', r'/admin/comment/delete-{idComment:\d+}.html')
 
     config.add_route('right_list', r'/admin/right/list.html')
     config.add_route('right_list:new', r'/admin/right/list-{new}.html')

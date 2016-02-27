@@ -233,6 +233,10 @@ a.hoverimg:hover img.original {
 	opacity:0;
 }
 
+img.img-comment {
+	height: 5em;
+}
+
 @media(min-width:768px) {
 	.navbar-fixed-left {
 		height: 100%;

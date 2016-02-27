@@ -8,10 +8,8 @@ from pyramid.view import view_config
 from sqlalchemy.exc import IntegrityError
 
 from pyramidapp.models.menu import MenuAdministration
-from pyramidapp.models.group import Group, GroupRightAccess
-from pyramidapp.models.right import Right
+from pyramidapp.models.comment import Comment
 
-from pyramidapp.forms.group import GroupForm
 
 
 class CommentView(object):
@@ -28,4 +26,31 @@ class CommentView(object):
                  renderer='admin/comment.mak',
                  permission='comment')
     def comment_list(self):
-        pass
+        comment_list = Comment.get_waiting_for_validation()
+        return {'contents': comment_list}
+
+    @view_config(route_name='validate_comment',
+                 permission='comment')
+    def comment_validate(self):
+        idcomment = int(self.request.matchdict.get('idComment', -1))
+        comment = Comment.by_uid(idcomment)
+
+        session = Comment.get_session()
+        comment.valid = True
+        session.commit()
+
+        url = self.request.route_url('manage_comments')
+        return HTTPFound(url)
+
+    @view_config(route_name='delete_comment',
+                 permission='comment')
+    def comment_delete(self):
+        idcomment = int(self.request.matchdict.get('idComment', -1))
+        comment = Comment.by_uid(idcomment)
+
+        session = Comment.get_session()
+        session.delete(comment)
+        session.commit()
+
+        url = self.request.route_url('manage_comments')
+        return HTTPFound(url)
