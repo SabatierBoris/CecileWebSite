@@ -21,23 +21,23 @@
 	<h1>Aucun commentaire</h1>
 % endif
 
-<form class="col-md-4 col-sm-6" role="form" method="post">
+<form class="col-lg-5 col-md-6 col-sm-9" role="form" method="post">
 	<%
 		css_class = ""
 		if form.errors.get('name'):
 			css_class = "has-error"
 	%>
 	<div class="${css_class} form-group">
-		${form.name.label(class_="control-label col-sm-4")}
-		<div class="col-sm-8">
+		${form.name.label(class_="control-label col-sm-5")}
+		<div class="col-sm-7">
 			${form.name(placeholder="Pseudo",class_="form-control")}
 		</div>
 		${form.csrf_token()}
 	</div>
 
 	<div class="${css_class} form-group">
-		${form.comment.label(class_="control-label col-sm-4")}
-		<div class="col-sm-8">
+		${form.comment.label(class_="control-label col-sm-5")}
+		<div class="col-sm-7">
 			${form.comment(placeholder="Commentaire",class_="form-control")}
 		</div>
 	</div>
