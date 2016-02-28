@@ -12,8 +12,8 @@ from itertools import product
 
 
 THUMBNAIL_BLUR = 2
-THUMBNAIL_SHADOW_COLOR = (255, 255, 255)
-THUMBNAIL_SHADOW_INFO = (0, 0)
+THUMBNAIL_SHADOW_COLOR = (0x00, 0x00, 0x00)
+THUMBNAIL_SHADOW_INFO = (5, 1)
 THUMBNAIL_TEXT_COLOR = (0xFF, 0xBA, 0x00)
 THUMBNAIL_SIZE = (800, 600)
 THUMBNAIL_POLICE = "pyramidapp/static/fonts/OxygenMono-Regular.otf"
@@ -114,11 +114,11 @@ def generate_thumbnail_over(original, target, text, blur=True):
         police_size = calcul_full_size_text_police(image.size,
                                                    text,
                                                    police)
-        #image1 = add_centered_blured_shadow(image1,
-        #                                    text,
-        #                                    (police, police_size),
-        #                                    THUMBNAIL_SHADOW_COLOR,
-        #                                    THUMBNAIL_SHADOW_INFO)
+        image1 = add_centered_blured_shadow(image1,
+                                            text,
+                                            (police, police_size),
+                                            THUMBNAIL_SHADOW_COLOR,
+                                            THUMBNAIL_SHADOW_INFO)
         image1 = add_centered_text(image1,
                                    text,
                                    police,
