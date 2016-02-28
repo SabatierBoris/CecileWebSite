@@ -2,5 +2,5 @@
 
 alembic -c pyramidapp/config/production.ini upgrade head
 initialize_bd pyramidapp/config/production.ini
-gunicorn -w 16 -b 0.0.0.0:8080 wsgi
+gunicorn --paste pyramidapp/config/production.ini
 #pserve pyramidapp/config/production.ini
