@@ -28,6 +28,8 @@ REQUIRES = [
     'WebTest',
     # Image manipulation
     'Pillow',
+    # Server
+    'gunicorn',
 ]
 
 setup(
