@@ -58,5 +58,6 @@ setup(
         main = pyramidapp:main
         [console_scripts]
         initialize_bd = pyramidapp.scripts.initializebd:main
+        initialize_thumbnail = pyramidapp.scripts.initializethumbnail:main
     """,
 )

@@ -115,17 +115,4 @@ def main(global_config, **settings):
     config.scan()
     config.begin()
 
-    # Thumbnail remove
-    base = None
-    if settings['content.dir'] in os.environ:
-        base = os.environ[settings['content.dir']]
-    else:
-        base = settings['content.dir']
-    for item in Item.all():
-        item.do_not_generate=True
-        if item.thumbnail and os.path.isfile(item.thumbnail):
-            os.remove(item.thumbnail)
-        if item.thumbnailover and os.path.isfile(item.thumbnailover):
-            os.remove(item.thumbnailover)
-
     return config.make_wsgi_app()
