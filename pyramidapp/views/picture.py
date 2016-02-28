@@ -12,6 +12,7 @@ from pyramidapp.models.menu import MenuAdministration
 from pyramidapp.models.category import Category
 from pyramidapp.models.picture import Picture
 from pyramidapp.models.comment import Comment
+from pyramidapp.models.tag import Tag
 from pyramidapp.forms.picture import PictureForm
 from pyramidapp.forms.comment import CommentForm
 
@@ -101,7 +102,15 @@ class PictureView(object):
                     picture.parent = parent
                     # pylint: disable=E1101
                     form.populate_obj(picture)
+
                     session.add(picture)
+                    for tag_name in picture.tags:
+                        tag = Tag.by_name(tag_name)
+                        if tag == None:
+                            tag = Tag()
+                            tag.name = tag_name
+                            session.add(tag)
+                        tag.items.append(picture)
                     session.flush()
                 session.commit()
                 url = self.request.route_url('view_category',

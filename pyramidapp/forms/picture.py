@@ -10,6 +10,7 @@ from wtforms.fields import (
 from wtforms.validators import Required
 
 from pyramidapp.forms.validators import ImageFileRequired
+from pyramidapp.forms.tagListField import TagListField
 
 
 class PictureForm(CSRFSecureForm):
@@ -19,4 +20,4 @@ class PictureForm(CSRFSecureForm):
     """
     name = TextField(u'Nom', [Required()])
     image = FileField(u'Image', [ImageFileRequired()])
-
+    tags = TagListField(u'Tags', [])

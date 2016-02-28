@@ -45,6 +45,19 @@
 					</div>
 				% endfor
 		% endif
+		<div class="${css_class} form-group">
+			${form.tags.label(class_="control-label col-sm-4")}
+			<div class="col-sm-8">
+				${form.tags(placeholder="tag1, tag2, ...",class_="form-control")}
+			</div>
+		</div>
+		% if form.errors.get('tags'):
+				% for error in form.errors['tags']:
+					<div class="bg-danger col-md-offset-4 col-sm-8">
+						${error}
+					</div>
+				% endfor
+		% endif
 		<button class="btn btn-primary btn-xs" type="submit">
 			<i class="fa fa-check-square fa-fw"></i> Enregistrer
 		</button>

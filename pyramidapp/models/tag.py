@@ -16,6 +16,10 @@ from . import (
 )
 from pyramidapp.models.item import Item
 
+ASSOCIATION_TABLE = Table('item_tag', BASE.metadata,
+                          Column('tag_id', Integer, ForeignKey("tag.uid")),
+                          Column('item_id', Integer, ForeignKey(Item.uid)))
+
 
 class Tag(Dateable, BASE):
     # pylint: disable=R0903
@@ -28,11 +32,16 @@ class Tag(Dateable, BASE):
                   nullable=False,
                   unique=True,
                   info={'trim': True})
+    items = relationship("Item", secondary=ASSOCIATION_TABLE)
 
+    @classmethod
+    def by_name(cls, name):
+        """
+        Get a tag by the tag name
+        """
+        # pylint: disable=E1101
+        return cls.get_session().query(cls).filter(cls.name == name).first()
 
-ASSOCIATION_TABLE = Table('item_tag', BASE.metadata,
-                          Column('tag_id', Integer, ForeignKey(Tag.uid)),
-                          Column('item_id', Integer, ForeignKey(Item.uid)))
 
 
 class TaggableItem(object):
