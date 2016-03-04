@@ -44,7 +44,6 @@ class Item(Dateable, BASE):
         """
         Constructor
         """
-        print("BOUBOUP !!!")
         self.do_not_generate = False
 
     @property
@@ -149,4 +148,10 @@ class Item(Dateable, BASE):
         """
         session = self.get_session()
         session.delete(self)
+        self.do_not_generate=True
+        if self.thumbnail and os.path.isfile(self.thumbnail):
+            os.remove(self.thumbnail)
+        if self.thumbnailover and os.path.isfile(self.thumbnailover):
+            os.remove(self.thumbnailover)
         session.commit()
+        super(Item,self).delete()

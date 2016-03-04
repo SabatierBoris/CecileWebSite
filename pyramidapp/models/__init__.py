@@ -51,6 +51,9 @@ class ModelBase(object):
         """
         return DB_SESSION
 
+    def delete(self):
+        pass
+
 
 class Dateable(ModelBase):
     # pylint: disable=R0903

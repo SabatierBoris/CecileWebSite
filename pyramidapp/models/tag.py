@@ -8,7 +8,7 @@ from sqlalchemy import Integer
 from sqlalchemy import Column
 from sqlalchemy import String
 from sqlalchemy.orm import relationship
-from sqlalchemy.ext.declarative import declared_attr
+from sqlalchemy.ext.declarative import as_declarative, declared_attr, AbstractConcreteBase
 
 from . import (
     BASE,
@@ -42,20 +42,24 @@ class Tag(Dateable, BASE):
         # pylint: disable=E1101
         return cls.get_session().query(cls).filter(cls.name == name).first()
 
+    def delete(self):
+        session = self.get_session()
+        session.delete(self)
+        session.commit()
 
 
-class TaggableItem(object):
+class TaggableItem(AbstractConcreteBase):
     # pylint: disable=R0903
     #    Too fee pyblic methods: we are juste a builtin
     """
     Builtin class for add the tags attribute to items
     """
-    @staticmethod
     @declared_attr
-    def tags():
-        """
-        Attribute to get the tags of an item
-        """
+    def tags(cls):
         return relationship('Tag',
-                            secondary='item_tag',
-                            backref='items')
+                            secondary='item_tag')
+
+    def delete(self):
+        for t in self.tags:
+            if len(t.items) == 0:
+                t.delete()

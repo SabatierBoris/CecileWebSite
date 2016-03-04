@@ -99,8 +99,6 @@ class Picture(Item, TaggableItem, CommentableItem, BASE):
         """
         Delete picture
         """
-        os.remove(self.thumbnail)
-        os.remove(self.thumbnailover)
         os.remove(self.original_image_name)
 
         super(Picture,self).delete()
