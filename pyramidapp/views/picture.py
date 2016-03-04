@@ -103,14 +103,16 @@ class PictureView(object):
                     # pylint: disable=E1101
                     form.populate_obj(picture)
 
-                    session.add(picture)
+                    real_tags = []
                     for tag_name in picture.tags:
                         tag = Tag.by_name(tag_name)
                         if tag == None:
                             tag = Tag()
                             tag.name = tag_name
                             session.add(tag)
-                        tag.items.append(picture)
+                        real_tags.append(tag)
+                    picture.tags = real_tags
+                    session.add(picture)
                     session.flush()
                 session.commit()
                 url = self.request.route_url('view_category',

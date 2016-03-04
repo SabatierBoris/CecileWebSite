@@ -16,6 +16,7 @@
 		% endif
 	</span>
 	<div class="description">
+		<%include file="tagsDisplay.mak" args="item=item"/>
 		<%include file="commentDisplay.mak" args="item=item"/>
 	</div>
 </div>
