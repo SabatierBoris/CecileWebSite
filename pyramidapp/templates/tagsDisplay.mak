@@ -4,6 +4,10 @@
 	<a class="tag" href="#TODO">${tag.name}</a>
 </%def>
 
-% for tag in item.tags:
-	${displayTag(tag)}
-% endfor
+% if len(item.tags) > 0:
+	<div class="tags">
+		% for tag in item.tags:
+			${displayTag(tag)}
+		% endfor
+	</div>
+% endif

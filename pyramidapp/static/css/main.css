@@ -15,6 +15,15 @@ h1 {
     font-size: 1.5em;
 }
 
+div.tags {
+    padding-top: 4em;
+    padding-bottom: 2em;
+}
+
+div.tags a.tag {
+    text-transform: capitalize;
+}
+
 #page-content-wrapper {
 	min-height:100%;
 	height:100%;
