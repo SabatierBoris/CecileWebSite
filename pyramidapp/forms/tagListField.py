@@ -35,7 +35,7 @@ class TagListField(Field):
         """
         d = {}
         for item in seq:
-            if item.lower() not in d:
-                d[item.lower()] = True
-                yield item
-
+            data = item.strip().lower()
+            if len(data) > 0 and data not in d:
+                d[data] = True
+                yield data
