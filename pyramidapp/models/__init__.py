@@ -52,7 +52,10 @@ class ModelBase(object):
         return DB_SESSION
 
     def delete(self):
-        pass
+        try:
+            super().delete()
+        except:
+            pass
 
 
 class Dateable(ModelBase):
@@ -66,6 +69,12 @@ class Dateable(ModelBase):
     updated_on = Column(DateTime,
                         default=func.now(),
                         onupdate=func.now())
+
+    def delete(self):
+        try:
+            super().delete()
+        except:
+            pass
     
 
 import pyramidapp.models.right

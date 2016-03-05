@@ -6,6 +6,7 @@ from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPNotFound
 from pyramid.response import FileResponse
 
+from pyramidapp.models.tag import Tag
 from pyramidapp.models.item import Item
 
 

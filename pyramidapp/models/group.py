@@ -32,7 +32,7 @@ class Group(Dateable, BASE):
     rights = relationship('Right', secondary='group_right', backref='groups')
 
     def __init__(self, name=""):
-        super(Group, self).__init__()
+        super().__init__()
         self.name = name
 
 

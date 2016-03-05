@@ -60,7 +60,7 @@ class User(Dateable, BASE):
     groups = relationship('Group', secondary='user_group', backref='users')
 
     def __init__(self, login="", password=""):
-        super(User, self).__init__()
+        super().__init__()
         self.login = login
         self.password = password
 

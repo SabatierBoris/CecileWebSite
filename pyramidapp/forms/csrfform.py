@@ -12,7 +12,7 @@ class CSRFSecureForm(SecureForm):
     """
     def __init__(self, *a, **kw):
         self.request = kw.pop('request')
-        super(CSRFSecureForm, self).__init__(*a, **kw)
+        super().__init__(*a, **kw)
 
     def generate_csrf_token(self, csrf_context):
         return self.request.session.get_csrf_token()

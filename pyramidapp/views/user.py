@@ -8,6 +8,7 @@ from pyramid.httpexceptions import (
 )
 from sqlalchemy.exc import IntegrityError
 
+from pyramidapp.models.tag import Tag
 from pyramidapp.models.menu import MenuAdministration
 from pyramidapp.models.user import User, UserGroupAccess
 from pyramidapp.models.group import Group
@@ -72,7 +73,8 @@ class UserView(object):
                 # pylint: disable=E1101
                 return HTTPFound(location=self.request.route_url('user_list'))
 
-        return {'title': 'Liste des utilisateurs',
+        return {'tags' : Tag.all(),
+                'title': 'Liste des utilisateurs',
                 'user_list': user_list,
                 'group_list': group_list,
                 'forms': forms}

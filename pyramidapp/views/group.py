@@ -7,6 +7,7 @@ from pyramid.view import view_config
 
 from sqlalchemy.exc import IntegrityError
 
+from pyramidapp.models.tag import Tag
 from pyramidapp.models.menu import MenuAdministration
 from pyramidapp.models.group import Group, GroupRightAccess
 from pyramidapp.models.right import Right
@@ -72,7 +73,8 @@ class GroupView(object):
                 # pylint: disable=E1101
                 return HTTPFound(location=self.request.route_url('group_list'))
 
-        return {'title': 'Liste des groupes',
+        return {'tags' : Tag.all(),
+                'title': 'Liste des groupes',
                 'right_list': right_list,
                 'group_list': group_list,
                 'forms': forms}

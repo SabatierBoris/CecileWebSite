@@ -7,6 +7,7 @@ from pyramid.view import view_config
 
 from sqlalchemy.exc import IntegrityError
 
+from pyramidapp.models.tag import Tag
 from pyramidapp.models.menu import MenuAdministration
 from pyramidapp.models.comment import Comment
 
@@ -27,7 +28,8 @@ class CommentView(object):
                  permission='comment')
     def comment_list(self):
         comment_list = Comment.get_waiting_for_validation()
-        return {'contents': comment_list}
+        return {'tags' : Tag.all(),
+                'contents': comment_list}
 
     @view_config(route_name='validate_comment',
                  permission='comment')

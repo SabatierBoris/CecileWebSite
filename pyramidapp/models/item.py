@@ -154,4 +154,7 @@ class Item(Dateable, BASE):
         if self.thumbnailover and os.path.isfile(self.thumbnailover):
             os.remove(self.thumbnailover)
         session.commit()
-        super(Item,self).delete()
+        try:
+            super().delete()
+        except:
+            pass

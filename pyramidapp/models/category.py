@@ -126,7 +126,10 @@ class Category(Item):
 
         shutil.rmtree(Item.asciify_string(self.get_dir()))
 
-        super(Category,self).delete()
+        try:
+            super().delete()
+        except:
+            pass
 
 
 @event.listens_for(Category.name, 'set')

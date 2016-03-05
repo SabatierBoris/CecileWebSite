@@ -68,7 +68,8 @@ class PictureView(object):
             session.commit()
             form = CommentForm(request=self.request)
 
-        return {'item': picture,
+        return {'tags' : Tag.all(),
+                'item': picture,
                 'idCategory': picture.parent.uid,
                 'form' : form}
 
@@ -124,7 +125,8 @@ class PictureView(object):
                 errors.append("Nom déjà existant")
                 form.errors['name'] = errors
 
-        return {'title': 'Nouvelle Image',
+        return {'tags' : Tag.all(),
+                'title': 'Nouvelle Image',
                 'idCategory': idcategory,
                 'item': parent,
                 'form': form}

@@ -4,6 +4,7 @@ The home admin view part
 """
 from pyramid.view import view_config
 
+from pyramidapp.models.tag import Tag
 
 class AdminView(object):
     # pylint: disable=R0903
@@ -22,4 +23,6 @@ class AdminView(object):
         self = self
         accessible_pages = {}
 
-        return {'title': 'Administration', 'pages': accessible_pages}
+        return {'tags' : Tag.all(),
+                'title': 'Administration',
+                'pages': accessible_pages}

@@ -8,6 +8,7 @@ from pyramid.httpexceptions import HTTPForbidden
 from pyramid.security import remember
 from pyramid.security import forget
 
+from pyramidapp.models.tag import Tag
 from pyramidapp.forms.login import LoginForm
 from pyramidapp.models.user import User
 import logging
@@ -44,7 +45,9 @@ class LoginView(object):
                     return HTTPFound(location=referer, headers=headers)
                 else:
                     form.errors['user'] = 'Login ou Password incorrect'
-        return {'title': 'Connexion', 'form': form}
+        return {'tags' : Tag.all(),
+                'title': 'Connexion',
+                'form': form}
 
     @view_config(route_name="logout")
     def logout(self):

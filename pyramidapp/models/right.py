@@ -26,5 +26,5 @@ class Right(Dateable, BASE):
                   info={'trim': True})
 
     def __init__(self, name=""):
-        super(Right, self).__init__()
+        super().__init__()
         self.name = name

@@ -8,6 +8,7 @@ from pyramid.httpexceptions import HTTPFound, HTTPNotFound
 from sqlalchemy.exc import IntegrityError
 
 from pyramidapp.models.menu import MenuAdministration
+from pyramidapp.models.tag import Tag
 from pyramidapp.models.category import Category
 from pyramidapp.models.mypaginate import MyPage
 from pyramidapp.forms.category import CategoryForm
@@ -41,7 +42,8 @@ class CategoryView(object):
                                     page=current_page,
                                     items_per_page=12)
 
-        return {'item' : category,
+        return {'tags' : Tag.all(),
+                'item' : category,
                 'idCategory' : idcategory,
                 'contents': paginated_contents,
                 'nbPages': len(contents)/12}
@@ -90,7 +92,8 @@ class CategoryView(object):
                 errors.append("Nom déjà existant")
                 form.errors['name'] = errors
 
-        return {'title': 'Nouvelle categorie',
+        return {'tags' : Tag.all(),
+                'title': 'Nouvelle categorie',
                 'item': parent,
                 'idCategory' : idcategory,
                 'form': form}
@@ -133,7 +136,8 @@ class CategoryView(object):
                 errors.append("Nom déjà existant")
                 form.errors['name'] = errors
 
-        return {'title': 'Modifier la categorie',
+        return {'tags' : Tag.all(),
+                'title': 'Modifier la categorie',
                 'item': category,
                 'idCategory' : category.uid,
                 'form': form}

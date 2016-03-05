@@ -42,6 +42,9 @@ class Tag(Dateable, BASE):
         # pylint: disable=E1101
         return cls.get_session().query(cls).filter(cls.name == name).first()
 
+    def __str__(self):
+        return self.name;
+
     def delete(self):
         session = self.get_session()
         session.delete(self)
@@ -63,3 +66,7 @@ class TaggableItem(AbstractConcreteBase):
         for t in self.tags:
             if len(t.items) == 0:
                 t.delete()
+        try:
+            super().delete()
+        except:
+            pass

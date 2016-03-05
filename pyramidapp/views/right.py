@@ -7,6 +7,7 @@ from pyramid.httpexceptions import HTTPFound
 
 from sqlalchemy.exc import IntegrityError
 
+from pyramidapp.models.tag import Tag
 from pyramidapp.models.menu import MenuAdministration
 from ..models.right import Right
 from ..forms.right import RightForm
@@ -72,7 +73,8 @@ class RightView(object):
                 # pylint: disable=E1101
                 return HTTPFound(location=self.request.route_url('right_list'))
 
-        return {'title': 'Liste des droits',
+        return {'tags' : Tag.all(),
+                'title': 'Liste des droits',
                 'right_list': right_list,
                 'forms': forms}
 

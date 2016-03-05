@@ -15,7 +15,7 @@ class MyPage(Page):
         Constructor
         """
         self.url = None
-        super(MyPage, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def get_pages(self, form='~2~', url=None):
         """

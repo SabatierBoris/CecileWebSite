@@ -101,4 +101,7 @@ class Picture(Item, TaggableItem, CommentableItem, BASE):
         """
         os.remove(self.original_image_name)
 
-        super(Picture,self).delete()
+        try:
+            super().delete()
+        except:
+            pass
