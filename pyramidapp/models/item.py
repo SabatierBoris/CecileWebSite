@@ -40,6 +40,8 @@ class Item(Dateable, BASE):
                                        'parent_id',
                                        name='item_by_parent'),)
 
+    link = relationship('Link', uselist=False, back_populates="item")
+
     def __init__(self):
         """
         Constructor

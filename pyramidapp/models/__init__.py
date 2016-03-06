@@ -84,3 +84,4 @@ import pyramidapp.models.item
 import pyramidapp.models.category
 import pyramidapp.models.tag
 import pyramidapp.models.picture
+import pyramidapp.models.link
