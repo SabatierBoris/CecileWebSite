@@ -52,13 +52,20 @@ def main(argv=None):
         engine = engine_from_config(settings, 'sqlalchemy.')
     DB_SESSION.configure(bind=engine)
 
+    nb_item = DB_SESSION.query(Item.uid).count()
+    i=0
     for item in Item.all():
+        i+=1
+        print("Purge generated thumbnail - %d %%"%(i*100/nb_item))
         item.do_not_generate=True
         if item.thumbnail and os.path.isfile(item.thumbnail):
             os.remove(item.thumbnail)
         if item.thumbnailover and os.path.isfile(item.thumbnailover):
             os.remove(item.thumbnailover)
 
+    i=0
     for item in Item.all():
+        i+=1
+        print("Generate thumbnail - %d %%"%(i*100/nb_item))
         item.thumbnail
         item.thumbnailover
