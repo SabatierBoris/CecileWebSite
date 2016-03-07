@@ -38,8 +38,8 @@ class MenuAdministration(object):
         val = MenuItem(display, route_name, route_name_for_item, cls)
         if order in MenuAdministration.PAGES:
             LOG.warning("Order %s is already exist (%s - %s) and (%s - %s)",
-                        order, route_name_category, route_name,
-                        MenuAdministration.PAGES[order].route_name_category,
+                        order, route_name_for_item, route_name,
+                        MenuAdministration.PAGES[order].route_name_for_item,
                         MenuAdministration.PAGES[order].route_name)
         MenuAdministration.PAGES[order] = val
 
