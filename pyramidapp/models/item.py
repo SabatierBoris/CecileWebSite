@@ -149,6 +149,8 @@ class Item(Dateable, BASE):
         Delete a item
         """
         session = self.get_session()
+        if self.link:
+            self.link.delete()
         session.delete(self)
         self.do_not_generate=True
         if self.thumbnail and os.path.isfile(self.thumbnail):
