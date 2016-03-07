@@ -40,7 +40,8 @@ class Category(Item):
     }
     children = relationship("Item",
                             backref=backref('category'),
-                            foreign_keys=[Item.parent_id])
+                            foreign_keys=[Item.parent_id],
+                            order_by="Item.uid")
 
     def updateName(self, value):
         thumb = self.thumbnail
