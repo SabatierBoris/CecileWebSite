@@ -21,7 +21,7 @@ div.tags {
 }
 
 div.tags a.tag {
-    text-transform: capitalize;
+    text-transform: lowercase;
 }
 
 #page-content-wrapper {

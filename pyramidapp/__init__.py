@@ -70,6 +70,7 @@ def main(global_config, **settings):
                      r'/category-{idItem:\d+}-{nameItem}/%s' % (
                          'delete.html'))
 
+    #Picture routes
     config.add_route('view_picture',
                      r'/picture-{idItem:\d+}-{nameItem}/%s' % (
                          'index.html'))
@@ -79,6 +80,15 @@ def main(global_config, **settings):
     config.add_route('new_picture',
                      r'/category-{idItem:\d+}-{nameItem}/%s' % (
                          'new-picture.html'))
+
+    #Link routes
+    config.add_route('new_link',
+                     r'/item-{idItem:\d+}-{nameItem}/%s' % (
+                         'new-link.html'))
+    config.add_route('delete_link',
+                     r'/link-{idLink:\d+}/%s' % (
+                         'delete-link.html'))
+
 
     #Thumbnail route
     config.add_route('thumbnail', r'/thumbnail-{idItem:\d+}-{nameItem}')

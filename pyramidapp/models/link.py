@@ -39,3 +39,15 @@ class Link(Dateable, BASE):
         super().__init__()
         self.name = name
         self.link = link
+
+    def delete(self):
+        """
+        Delete link
+        """
+        session = self.get_session()
+        session.delete(self)
+        session.commit()
+        try:
+            super().delete()
+        except:
+            pass
