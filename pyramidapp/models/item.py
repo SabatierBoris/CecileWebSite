@@ -111,7 +111,7 @@ class Item(Dateable, BASE):
         """
         from pyramidapp.models.category import Category
         # pylint: disable=E1101
-        cat = cls.get_session().query(Category).order_by(Item.uid.desc())
+        cat = cls.get_session().query(Category).order_by(Item.uid)
         return cat.filter(Category.parent == parent).all()
 
     def get_base(self):
