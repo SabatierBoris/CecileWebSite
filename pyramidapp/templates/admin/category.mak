@@ -50,10 +50,6 @@
 		</button>
 	</form>
 
-<%block name="css">
-	${parent.css()}
-	<link rel="stylesheet" href="${request.static_url('pyramidapp:static/css/font-awesome.min.css')}"/>
-</%block>
 <%block name="js">
 	${parent.js()}
 	<script src="${request.static_url('pyramidapp:static/js/browse.js')}"></script>

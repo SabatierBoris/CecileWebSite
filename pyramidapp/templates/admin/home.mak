@@ -6,9 +6,3 @@
 			</a>
 		</div>
 	% endfor
-
-<%block name="css">
-	${parent.css()}
-	<link rel="stylesheet" href="${request.static_url('pyramidapp:static/css/font-awesome.min.css')}"/>
-</%block>
-
