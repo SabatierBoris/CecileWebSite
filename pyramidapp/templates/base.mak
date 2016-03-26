@@ -51,9 +51,13 @@
 				% endif
 			</div>
 			<footer class="collapse navbar-collapse text-right">
+				<div class="center-block text-center" id="comm-link">
+					<a target="_blank" href="https://www.facebook.com/CecileM.dessin"><i class="fa fa-facebook-square fa-fw"></i></a>
+					<a target="_blank" href="https://fr.pinterest.com/cecilemdessin/"><i class="fa fa-pinterest fa-fw"></i></a>
+					<a target="_blank" href="https://www.instagram.com/cecilem.dessin/"><i class="fa fa-instagram fa-fw"></i></a>
+					<a target="_blank" href="https://www.alittlemarket.com/boutique/cecilem-2646639.html"><i class="fa fa-shopping-basket fa-fw"></i></a>
+				</div>
 				Par Bobby
-##				HTML5 valid
-##				CSS valid
 				<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/80x15.png" /></a>
 			</footer>
 		</nav>
