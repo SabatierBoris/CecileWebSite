@@ -14,7 +14,7 @@
 		<title>Cécile website</title>
 
 		<%block name="css">
-			<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Oxygen+Mono" />
+			<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Oxygen+Mono" />
 			<link rel="stylesheet" type="text/css" href="${request.static_url('pyramidapp:static/css/bootstrap.css')}"/>
 		</%block>
 
