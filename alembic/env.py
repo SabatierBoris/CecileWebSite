@@ -56,13 +56,13 @@ def run_migrations_online():
     """
     if 'DB_URL' in os.environ:
         engine = engine_from_config(
-            config.get_section("app:main"),
+            config.get_section("app:pyramidapp"),
             prefix='sqlalchemy.',
             url=os.environ['DB_URL'],
             poolclass=pool.NullPool)
     else:
         engine = engine_from_config(
-            config.get_section("app:main"),
+            config.get_section("app:pyramidapp"),
             prefix='sqlalchemy.',
             poolclass=pool.NullPool)
 
