@@ -1,7 +1,7 @@
 FROM debian:latest
 MAINTAINER Boris SABATIER sabatier.boris@gmail.com
 
-EXPOSE 8080
+EXPOSE 80
 
 RUN apt-get -y update
 RUN apt-get -y upgrade
